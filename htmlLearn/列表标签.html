@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>列表标签</title>
+    <style>
+
+        h1 {
+            color: red;
+            text-align: center;
+        }
+
+        h2 {
+            color: orange;
+        }
+
+        .mark {
+            color: red;
+            font-size: 20px;
+        }
+
+    </style>
+</head>
+<body>
+<h1>列表标签</h1>
+<p><span class="mark">时刻牢记</span>, html标签只有<span class="mark">定义语义</span>的作用, 不要用html标签当做css的样式调整</p>
+<div>
+    <h2>列表标签ul, ol, dl</h2>
+    <p>列表标签就是给一堆数据添加列表语义, 让浏览器认为这一堆数据是一个整体, 在开发中列表标签用的很多</p>
+    <div>
+        ul无序列表(unorder list) <br>
+        子标签li (list item) <br>
+        语义: 没有先后之分的数据列表
+        <ul type="disc">
+            <li>北京</li>
+            <li>上海</li>
+            <li>天津</li>
+            <li>重庆</li>
+        </ul>
+        <p>默认的样式type是disc, 还有square, circle两种, 不推荐使用自己的样式, 应该使用css调整样式</p>
+        <p>应用场景:1,新闻列表, 商品列表, 导航条</p>
+    </div>
+    <hr>
+    <div>
+        ol有序列表(order list) <br>
+        子标签li (list item) <br>
+        语义: 有先后之分的数据列表
+        <ol type="1">
+            <li>小明</li>
+            <li>小李</li>
+            <li>小红</li>
+            <li>小丽</li>
+        </ol>
+        <p>默认的样式type是1, 还有A, a, i, I, 同上, 不推荐使用自己的样式</p>
+        <p>应用场景:同无序列表, 只不过有语义的, 基本上有序, 也用无序做</p>
+
+    </div>
+    <hr>
+    <div>
+        dl定义列表(definition list)<br>
+        子标签dt(definition title) dd(definition description)
+        <dl>
+            <dt>购物指南</dt>
+            <dd>
+                <a href="#">购物流程</a><br/>
+                <a href="#">会员介绍</a><br/>
+                <a href="#">生活旅行/团购</a><br/>
+                <a href="#">常见问题</a><br/>
+                <a href="#">大家电</a><br/>
+                <a href="#">联系客服</a><br/>
+            </dd>
+        </dl>
+        <p>dl不同于 ul和ol, 子标签有两种分为 &lt;dt&gt; 和 &lt;dd&gt;, 推荐使用一个&lt;dt&gt;对应一个&lt;dd&gt;</p>
+        <p>应用场景: 1.网站的尾部信息, 2. 图文混排</p>
+    </div>
+    <p><span class="mark">总结:</span>ul使用频率最高, dl其次, ol最少, 都是丰富语义的列表, 如果样式复杂, 可以在它们的子标签里面添加其他的标签</p>
+    <hr>
+</div>
+</body>
+</html>
