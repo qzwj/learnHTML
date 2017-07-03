@@ -2,10 +2,141 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/base.css">
     <title>表格标签</title>
 </head>
 <body>
 
+<h1>表格标签</h1>
+
+<table bgcolor="black" width="200px" height="200px">
+    <caption>用bgcolor做的黑色细线表格</caption>
+    <thead>
+        <tr bgcolor="white">
+            <th>姓名</th>
+            <th>年龄</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr bgcolor="white" align="center" valign="top">
+            <td width="50px" valign="bottom">小王</td>
+            <td>18</td>
+        </tr>
+        <tr bgcolor="white">
+            <td>小李</td>
+            <td>22</td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr bgcolor="white">
+            <td>tfoot</td>
+            <td>tfoot</td>
+        </tr>
+    </tfoot>
+</table>
+
+<table border="1" width="200px" height="200px" align="center" cellspacing="0" cellpadding="10px">
+    <caption>用border做的细线表格</caption>
+    <tr>
+        <td>小王</td>
+        <td>18</td>
+    </tr>
+    <tr>
+        <td>小李</td>
+        <td>22</td>
+    </tr>
+</table>
+
+<table border="1" cellspacing="0" width="100px" height="100px">
+    <caption>合并单元格</caption>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+</table>
+
+<table border="1" cellspacing="0" width="100px" height="100px">
+    <caption>合并单元格</caption>
+    <tr>
+        <!--合并列单元格 1-->
+        <td colspan="2" rowspan="0"></td>
+        <td></td>
+        <!--合并列单元格 1 受影响的元素-->
+        <!--<td></td>-->
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <!--合并行单元格 2-->
+        <td rowspan="2"></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <!--合并列单元格 2 受影响的元素-->
+        <!--<td></td>-->
+    </tr>
+</table>
+
+<table border="1" cellspacing="0" width="100px" height="100px">
+    <caption>合并单元格</caption>
+    <tr>
+        <td colspan="2"></td>
+        <td></td>
+        <td></td>
+        <!--<td></td>-->
+    </tr>
+    <tr>
+        <td rowspan="2"></td>
+        <td></td>
+        <td colspan="2" rowspan="2"></td>
+        <!--<td></td>-->
+    </tr>
+    <tr>
+        <!--<td></td>-->
+        <td></td>
+        <!--<td colspan="2"></td>-->
+        <!--<td></td>-->
+    </tr>
+
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+</table>
+
+
+
+<p>table标签,即表格标签,就是把数据表格化. 表格标签也是块级元素, 占据浏览器一行 <br>
+    子标签有: <br>
+    caption: 表格的标题 <br>
+    tr: 表格的行. <br>
+    td: 是一个tr的子元素, 行中的元素 <br>
+    th: 用法同td类似, 含义不一样
+    thead和tbody, tfoot基本不用, 了解即可 <br>
+    <br>
+    标签属性: <br>
+    常用属性有: bgcolor, width , height, border, align, style, valign 等 <br>
+    table特有的属性: <br>
+    cellspading(单元格之间的外边距,默认2), cellpadding(单元格的内边距) <br>
+    td特有属性: <br>
+    colspan 合并列单元格, rowspan 合并行单元格 <br>
+
+    <sapn class="mark">注意:</sapn>以上这些属性, 以后都是通过css修改, 不是直接在标签上使用
+</p>
 
 
 </body>
