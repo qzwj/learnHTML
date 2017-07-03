@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>vue学习</title>
+    <link rel="stylesheet" href="css/base.css">
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+<!--简单的字符串渲染-->
+
+<h1>Vue初步了解</h1>
+<a href="https://cn.vuejs.org/v2/guide/">Vue的学习指南</a>
+
+<h2>字符串的渲染</h2>
+<div id="app">
+    {{message}}
+</div>
+
+<h2>绑定title</h2>
+<div id="app-2">
+    <span v-bind:title="message">
+        鼠标悬停几秒钟查看此处动态绑定的提示信息！
+    </span>
+</div>
+
+<h2>条件与循环</h2>
+<div id="app-3">
+    <p v-if="seen">现在你看到我了</p>
+</div>
+
+<div id="app-4">
+    <ol>
+        <li v-for="todo in todos">
+            {{todo.text}}
+        </li>
+    </ol>
+</div>
+
+<h2>处理用户输入</h2>
+<div id="app-5">
+    <p>{{message}}</p>
+    <button v-on:click="reverseMessage">反转消息</button>
+</div>
+
+<div id="app-6">
+    {{message}}
+    <input v-model="message">
+</div>
+
+
+<h2>组件化应用构建</h2>
+<div id="app-7">
+    <ol>
+        <todo-item v-for="item in groceryList" v-bind:todo="item"></todo-item>
+    </ol>
+</div>
+
+<h2>与自定义元素的关系</h2>
+<p>
+    你可能已经注意到 Vue 组件非常类似于自定义元素——它是 Web 组件规范的一部分，这是因为 Vue 的组件语法部分参考了该规范。<br>
+    例如 Vue 组件实现了 Slot API 与 is 特性。但是，还是有几个关键差别：<br>
+    Web 组件规范仍然处于草案阶段，并且尚无浏览器原生实现。相比之下，Vue 组件不需要任何补丁，并且在所有支持的浏览器（IE9 及更高版本）之下表现一致。必要时，Vue 组件也可以包装于原生自定义元素之内。<br>
+    Vue 组件提供了纯自定义元素所不具备的一些重要功能，最突出的是跨组件数据流，自定义事件通信以及构建工具集成。 <br>
+</p>
+
+
+
+<script>
+    var app = new Vue({
+        el : '#app',
+        data : {
+            message : "Hello Vue!"
+        }
+    });
+
+    var app2 = new Vue({
+        el : '#app-2',
+        data : {
+            message : '当前时间'+new Date()
+        }
+    });
+
+    var app3 = new Vue({
+        el : '#app-3',
+        data : {
+            seen : true
+        }
+    });
+
+    var app4 = new Vue({
+        el : '#app-4',
+        data : {
+            todos : [
+                {text : '学习JavaScript'},
+                {text : '学习Vue'},
+                {text : '学习项目'}
+            ]
+        }
+    });
+    
+    var app5 = new Vue({
+        el : '#app-5',
+        data : {
+            message : 'Hello Vue.js!'
+        },
+        methods : {
+            reverseMessage : function () {
+                this.message = this.message.split('').reverse().join('');
+            }
+        }
+    });
+
+    var app6 = new Vue({
+        el : '#app-6',
+        data : {
+            message : 'Hello Vue! 双向绑定'
+        }
+    });
+
+
+    // 组件化
+    // 把template注册为了一个组件, 自定义了属性todo
+    /*
+    * 这只是一个假设的例子，但是我们已经设法将应用分割成了两个更小的单元
+    * ，子单元通过 props 接口实现了与父单元很好的解耦。我们现在可以进一步为我们的
+    * todo-item 组件实现更复杂的模板和逻辑的改进，而不会影响到父单元。
+    * */
+    Vue.component('todo-item', {
+        props : ['todo'],
+        template : '<li>{{todo.text}}</li>'
+    });
+
+    var app7 = new Vue({
+        el : '#app-7',
+        data : {
+            groceryList : [
+                {text : '素菜'},
+                {text : '辣条'},
+                {text : '荤菜'}
+            ]
+        }
+    });
+
+</script>
+
+</body>
+</html>

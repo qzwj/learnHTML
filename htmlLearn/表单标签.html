@@ -12,23 +12,24 @@
 
 <h2>表单标签</h2>
 <form action="https://www.baidu.com">
-
-    <!--在html中, 如果属性的取值和名字一样, 可以只写名字一个, 例如checked,  推荐不要省略使用-->
-
-    <label for="account">账号:</label> <input type="text" name="username" id="account"> <br>
-    <label for="pwd">密码:</label> <input type="password" name="password" id="pwd"> <br>
-    性别:
-    男 <input type="radio" name="sex" checked="checked" value="male">
-    女 <input type="radio" name="sex" value="female"> <br>
-    爱好:
-    看书 <input type="checkbox" checked="checked" name="hobby" value="read">
-    游戏 <input type="checkbox" checked="checked" name="hobby" value="game">
-    运动 <input type="checkbox" name="hobby" value="sport"> <br>
-    <input type="hidden" value="隐藏值, 用来配合提交数据的, 不想让用户看到的提交的信息">
-    <input type="button" value="我是普通按钮" onclick="alert('我是普通按钮')">
-    <input type="image" src="images/denglu.jpg" onclick="alert('我是图片按钮');">
-    <input type="reset" value="清空" onclick="alert('清空表单已经填好的数据')">
-    <input type="submit" onclick="alert('提交到远程服务器, 需要具备两个条件, 1.需要给form表单的action指定地址 2.需要给表单元素都添加name属性')">
+    <fieldset>
+        <legend>表单标题</legend>
+        <!--在html中, 如果属性的取值和名字一样, 可以只写名字一个, 例如checked,  推荐不要省略使用-->
+            <label for="account">账号:</label> <input type="text" name="username" id="account"> <br>
+            <label for="pwd">密码:</label> <input type="password" name="password" id="pwd"> <br>
+            性别:
+            男 <input type="radio" name="sex" checked="checked" value="male">
+            女 <input type="radio" name="sex" value="female"> <br>
+            爱好:
+            看书 <input type="checkbox" checked="checked" name="hobby" value="read">
+            游戏 <input type="checkbox" checked="checked" name="hobby" value="game">
+            运动 <input type="checkbox" name="hobby" value="sport"> <br>
+            <input type="hidden" value="隐藏值, 用来配合提交数据的, 不想让用户看到的提交的信息">
+            <input type="button" value="我是普通按钮" onclick="alert('我是普通按钮')">
+            <input type="image" src="images/denglu.jpg" onclick="alert('我是图片按钮');">
+            <input type="reset" value="清空" onclick="alert('清空表单已经填好的数据')">
+            <input type="submit" onclick="alert('提交到远程服务器, 需要具备两个条件, 1.需要给form表单的action指定地址 2.需要给表单元素都添加name属性')">
+    </fieldset>
 </form>
 
 <p>
@@ -41,6 +42,7 @@
     reset重置按钮, 默认文字是重置, 也可以通过value修改, 功能是清空还原表单内的信息<br>
     submit,默认文字是提交, 作用是把表单的元素信息, 提交给远程服务器, 需要给form的action指定url, 需要给表单元素添加name属性 <br>
     给按钮指定事件, 通过onclick属性关联js代码
+    4.fieldset是表单标签的边框, 可以通过legend也这个边框设置一个标题
 </p>
 <hr>
 
