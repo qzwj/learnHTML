@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>表单标签</title>
+    <link rel="stylesheet" href="css/base.css" />
+</head>
+<body>
+
+<h1>表单标签</h1>
+<p>表单就是专门用来收集用户信息的.</p>
+
+<h2>表单标签</h2>
+<form action="https://www.baidu.com">
+
+    <!--在html中, 如果属性的取值和名字一样, 可以只写名字一个, 例如checked,  推荐不要省略使用-->
+
+    <label for="account">账号:</label> <input type="text" name="username" id="account"> <br>
+    <label for="pwd">密码:</label> <input type="password" name="password" id="pwd"> <br>
+    性别:
+    男 <input type="radio" name="sex" checked="checked" value="male">
+    女 <input type="radio" name="sex" value="female"> <br>
+    爱好:
+    看书 <input type="checkbox" checked="checked" name="hobby" value="read">
+    游戏 <input type="checkbox" checked="checked" name="hobby" value="game">
+    运动 <input type="checkbox" name="hobby" value="sport"> <br>
+    <input type="hidden" value="隐藏值, 用来配合提交数据的, 不想让用户看到的提交的信息">
+    <input type="button" value="我是普通按钮" onclick="alert('我是普通按钮')">
+    <input type="image" src="images/denglu.jpg" onclick="alert('我是图片按钮');">
+    <input type="reset" value="清空" onclick="alert('清空表单已经填好的数据')">
+    <input type="submit" onclick="alert('提交到远程服务器, 需要具备两个条件, 1.需要给form表单的action指定地址 2.需要给表单元素都添加name属性')">
+</form>
+
+<p>
+    form标签里是各种表单标签 <br>
+    1.input 标签的type属性的值不同, 展示了不同功能的表单标签 <br>
+    2.点击 标签前面的文字, 让input标签获得焦点, 需要用label标签 关联, 做法是给input 标签设置id, label的for属性关联这个id <br>
+    3.按钮类型的标签 <br>
+    type为button就是一个普通的按钮通过value设置按钮文字 <br>
+    image需要src指定按钮的图片 <br>
+    reset重置按钮, 默认文字是重置, 也可以通过value修改, 功能是清空还原表单内的信息<br>
+    submit,默认文字是提交, 作用是把表单的元素信息, 提交给远程服务器, 需要给form的action指定url, 需要给表单元素添加name属性 <br>
+    给按钮指定事件, 通过onclick属性关联js代码
+</p>
+<hr>
+
+请选择你喜欢的车型: <input type="text" list="data">
+<datalist id="data">
+    <option>宝马</option>
+    <option>奔驰</option>
+    <option>奥迪</option>
+    <option>保时捷</option>
+</datalist>
+<p>
+    <span class="mark">注意:</span>上面这个车型选择是利用datalist标签做的, 大多数浏览器不支持, 了解即可
+</p>
+<hr>
+
+<h2>html5新增标签</h2>
+<p>html5新增表单标签, 大部分浏览器不支持, 了解即可</p>
+
+邮箱: <input type="email"> <br>
+域名: <input type="url"> <br>
+日历: <input type="date"> <br>
+数字: <input type="number"> <br>
+颜色: <input type="color">
+
+<hr>
+<h2>下拉列表select标签</h2>
+<p>不同于datalist, 不需要绑定给谁, 不需要自己输入内容, 也可以用selected属性设置默认值</p>
+<select>
+    <option value="">小明</option>
+    <option value="" selected="selected">小丽</option>
+    <option value="">小红</option>
+    <option value="">小王</option>
+</select>
+
+<p>带分隔标签的select</p>
+<select>
+    <optgroup label="北京">
+        <option value="">朝阳区</option>
+        <option value="">东城区</option>
+        <option value="">海淀区</option>
+    </optgroup>
+    <optgroup label="河南">
+        <option value="">信阳</option>
+        <option value="">郑州</option>
+        <option value="">南阳</option>
+    </optgroup>
+</select>
+
+<hr>
+<h2>多行文本标签 textarea</h2>
+<p>
+    1.默认可以无限换行 <br>
+    2.通过修改cols和rows可以达到设置宽高的效果
+    3.默认可以拉伸, 可以通过修改css属性关闭这个功能
+</p>
+<textarea name="" id="" cols="30" rows="10">
+
+</textarea>
+
+
+</body>
+</html>
