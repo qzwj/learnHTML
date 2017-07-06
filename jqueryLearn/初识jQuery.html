@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>jquery学习</title>
+    <link rel="stylesheet" href="../common/css/base.css">
+    <script src="./lib/jquery-3.2.1.js" type="text/javascript"></script>
+    <script>
+        $(document).ready(function () {
+            alert("Hello jQuery");
+        });
+
+        $(function () {
+           alert("test2");
+        });
+    </script>
+</head>
+<body>
+
+<h1>jQuery学习</h1>
+<h2>ready的学习</h2>
+
+<table border="1" cellspacing="0" width="500px" height="500px">
+    <caption>windown.onload和$(document).ready()的对比</caption>
+    <tr height="50px" align="center">
+        <th width="100px"></th>
+        <th>window.onload</th>
+        <th>$(document).ready()</th>
+    </tr>
+    <tr align="center">
+        <td>编写个数</td>
+        <td>
+            <code>
+                window.onload=function(){
+                    alert('test1');
+                }
+
+                window.onload=function(){
+                    alert('test2');
+                }
+                <br>
+                只会弹出test2
+            </code>
+        </td>
+        <td>
+            <code>
+            window.onload=function(){
+            alert('test1');
+            }
+
+            window.onload=function(){
+            alert('test2');
+            }
+            <br>
+            会弹出test1和test2
+            </code>
+        </td>
+    </tr>
+    <tr align="center" height="150px">
+        <td>简化写法</td>
+        <td>
+            不能简化, 只能 <br>
+            window.onload=function(){}
+        </td>
+        <td>
+            可以简化 <br>
+            $(function){}
+        </td>
+    </tr>
+</table>
+
+<h2>jQuery对象和DOM对象的区别</h2>
+
+<p>
+    jQuery对象就是通过包装DOM对象产生的对象, DOM对象就是HTML中DOM树中的元素节点. <br>
+    jQuery对象无法使用DOM对象本身的任何方法, 只能使用自己的方法 <br>
+    例如: $("#foo").html() 和 document.getElemenetById("foo").innerHTML
+</p>
+
+<h2>jQuery对象和DOM对象的相互转换</h2>
+
+<p>
+
+<pre>
+
+    jQuery对象转DOM对象
+    var $obj = $("#foo"); //jQuery对象
+    var obj = $obj[0];    //DOM对象
+    var obj2 = $obj.get(0); //DOM对象
+
+
+    DOM对象转jQuery对象
+    var obj3 = document.getElementById("foo");   //DOM对象
+    var $obj4 = $(obj3);                         //jQuery对象
+
+    <span class="mark">注意:</span>
+    1.平时使用的jQuery对象都是$()函数制造的,$()就像一个函数的制造工厂
+    2.DOM对象方法和jQuery对象的方式一定不要互相使用
+</pre>
+
+</p>
+
+<h2>jQuery和其他js库的兼容</h2>
+
+<script>
+
+</script>
+<pre>
+    jQuery.noConflict(); // 将变量$的控制权交给其他库,自己使用jQuery变量
+    jQuery("#foo");
+
+    var $w = jQuery.noConflict(); // 自定义一个快捷变量
+    $w("#foo");
+
+    jQuery.noConflict();
+    (function($){
+        // 里面可以继续用$变量使用jQuery对象
+        $(function{
+
+        });
+    })(jQuery);
+
+    jQuery库在其他库之前导入, 可以放心使用jQuery对象, 把$权限交给别的库, 不用使用jQuery.noConflict();
+
+</pre>
+
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>vue学习</title>
-    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="../common/css/base.css">
     <script src="lib/vue.js"></script>
 </head>
 <body>
@@ -64,9 +64,16 @@
     Vue 组件提供了纯自定义元素所不具备的一些重要功能，最突出的是跨组件数据流，自定义事件通信以及构建工具集成。 <br>
 </p>
 
-
+<div v-if="Math.random() > 0.5">
+    Now you see me
+</div>
+<div v-else>
+    Now you don't
+</div>
 
 <script>
+
+
     var app = new Vue({
         el : '#app',
         data : {
