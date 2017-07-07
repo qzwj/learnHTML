@@ -5,9 +5,17 @@ h1 {
 
 h2 {
     color: orange;
+    text-align: center;
 }
 
 .mark {
     color: red;
     font-size: 20px;
+}
+
+p {
+    width: 1000px;
+    background-color: #ccc;
+    margin: 10px auto;
+    padding: 10px;
 }

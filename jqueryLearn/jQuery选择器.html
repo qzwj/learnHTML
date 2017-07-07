@@ -5,15 +5,178 @@
     <link rel="stylesheet" href="../common/css/base.css">
     <script src="./lib/jquery-3.2.1.js"></script>
     <title>jQuery选择器</title>
-    <script>
-        $(function () {
-            alert(1);
-        });
-    </script>
+
 </head>
 <body>
 
 <h1>jQuery选择器</h1>
+
+<h2>jQuery选择器是什么</h2>
+
+<p>  jQuery 中的选择器完全继承了css的风格. 利用jQuery选择器,可以非常便捷和快速的找出特定的DOM元素
+     然后给他们添加相应的行为, 而不需要担心浏览器是否支持这一选择器, 学会使用选择器是学习
+     jq选择器的基础, jq的行为规则都必须在获取元素后才能生效
+</p>
+
+<p>
+    jq选择器的写法与css选择器的写法很类似, 只不过效果不同, css选择器找到元素后是添加样式, 而jq选择器是找到元素后添加行为.
+    需要说明的是, jq中涉及操作css样式的部分比单纯的css功能更强大, 拥有跨浏览器的兼容性.
+</p>
+
+<h2>jQuery选择器的优势</h2>
+
+<p>
+    1, 简洁的写法 <br>
+        $("id") 替代 document.getElementById("id") <br>
+        $("div") 替代 document.getElementByTagName("div") <br>
+
+    2, 支持css1, css2全部选择器, css3部分选择器 <br>
+
+    3. 完善的处理机制 <br>
+        document.getElementById("foo").style.color="red"; 如果没有foo这个id元素, 就会报错, 需要if(document.getElementById("foo"){}验证) <br>
+        但是 $("#foo").css('color', 'red'); 不会报错, $("#foo")获取的是对象, 即时网页上没有这个元素, 因此如果要通过jq验证某个元素在不在需要 <br>
+         if($("#foo").length){} 或者 if($("#foo").get(0)){}
+
+</p>
+
+<h2>jQuery选择器</h2>
+
+<p>
+    <span class="mark">基本选择器:</span>  <br>
+        1. $("#test") 返回单个元素 <br>
+        2. $(".test") 返回集合元素 <br>
+        3. $("p") 返回集合元素 <br>
+        4. $("*") 返回所有元素 <br>
+        5. $("div,span,p.myClass") 返回所有div,span,p拥有myClass的一组元素 <br>
+    <span class="mark">层次选择器:</span>  <br>
+        1. $("div span") 选取div里所有的span元素 <br>
+        2. $("div>span") 选取div元素下名为span的子元素(不包含孙子) <br>
+        3. $(".one+div") 选取class为one的下一个div同辈元素 <br>
+        4. $("#two~div") 选取id为two的元素后面所有的div同辈元素 <br>
+     在层次选择器中, 前2个常用, 后两个不常用, 可以用方法替代, 例如 <br>
+     $(".one + div") 相当于 $(".one").next("div"); <br>
+     $("#prev~div") 相当于 $("#prev").nextAll("div"); <br>
+     如果是获取同辈所有的元素, 不只是后面的元素可以 $("prev").siblings(); <br>
+    <span class="mark">基本过滤选择器:</span>  <br>
+        1. $("div:first") 选取所有div元素中的第一个div元素 <br>
+        2. $("div:last") <br>
+        3. $("input:not(.myClass)") 选取class不是.myClass的input元素 <br>
+        4. $("input:even") 选取索引为偶数的input元素 <br>
+        5. $("input:odd") <br>
+        6. $("input:eq(1)") 选取索引为1的input元素 <br>
+        7. $("input:gt(1)") 大于1的input元素 <br>
+        8. $("input:lt(1)") 小于1的input元素 <br>
+        9. $(":header") 选取所有h系列标签元素 <br>
+        10. $("div:animated") 选取正在执行动画的div元素 <br>
+        11. $(":focus") 选取当前获取焦点的元素 <br>
+    <span class="mark">内容过滤选择器:</span>  <br>
+        1. $("div:contains('我')") 选取文本含'我'的div元素 <br>
+        2. $("div:empty") 选取不包含子元素(包括文本元素)的div元素 <br>
+        3. $("div:has(p)") 选取含有p元素的div元素 <br>
+        4. $("div:parent") 选取拥有子元素(包括文本元素)的div元素 <br>
+    <span class="mark">可见性过滤选择器:</span>  <br>
+        1. $(":hidden") 选取所有不可见的元素, 包括 input type=hidden, display:none, style="visibility:hidden", <br>
+            如果只想取input, 就$("input:hidden") <br>
+        2. $("div:visible") 选取所有可见的div元素 <br>
+        例子: $("div:hidden").show(3000); 3秒显示隐藏的元素 <br>
+    <span class="mark">属性过滤选择器:</span>  <br>
+        1. $("div[id]") 选取拥有属性id的元素 <br>
+        2. $("div[title=test]") 选取属性title为"test"的div元素 <br>
+        3. $("div[title!=test]") 选取title不为test的div元素, 没有title的div元素也算 <br>
+        4. $("div[title^=test]") 选取属性title以'test'开始的div元素 <br>
+        5. $("div[title$=test]") 选取属性title以'test'结尾的div元素 <br>
+        6. $("div[title*=test]") 选取title含有'test'的div元素 <br>
+        7. $("div[title|='en']") 选取title等于或者以en为前缀(该字符串后跟一个连接符-)的元素 <br>
+        8. $("div[title~='uk']"]) 获取属性title用空格分隔的值中包含uk的元素 <br>
+        9. $("div[id][title$='test']") 选取拥有属性id, 并且title以'test'结尾的div元素 <br>
+    <span class="mark">子元素过滤选择器:</span>  <br>
+        1. eq(index) 只匹配一个元素, :nth-child将为每一个父元素匹配子元素, 并且:nth-child(index)的index <br>
+        是从1开始的, 而:eq(index)是从0开始的
+        2. :first 只返回单个元素, 而:first-child选择器将为每个父元素匹配第一个子元素. 例如: <br>
+        $("ul li:first-child") 选择每一个ul中的第一个元素 <br>
+        3, :last-child 同上 <br>
+        4, $("ul li:only-child") 在ul选取是只有唯一一个子元素的li元素 <br>
+        5. :nth-child(index) index可以是 even, odd, 2, 3n, 3n+1等这样的值 <br>
+    <span class="mark">表单对象属性过滤选择器:</span>  <br>
+        1. $("#form1 :enabled") 选取id为form1 的表单内所有可用的元素 <br>
+        2. $("#form2 :disabled") 和上面相反 <br>
+        3. $("input:checked") 选取所有被选中的元素 <br>
+        4. $("select option:selected") 选取所有select被选中的元素 <br>
+    <span class="mark">表单选择器:</span>  <br>
+        1. $("#form1 :input").length  id为form1的表单个数 <br>
+        2. $("#form1 :text").length  type为text的个数 <br>
+        3. $("#form1 :password").length type为password的个数 <br>
+        其他type同理 ...... <br>
+        实例: <br>
+        $("#tb tbody tr:even").css("background", "red");  偶数行为红色<br>
+        $("input[name='check']:checked").length
+</p>
+
+<p>
+    <span class="mark">看看下面一段代码</span> <br>
+    &lt;form action="#" id="form1"&gt; <br>
+    &lt;input type="text"&gt; <br>
+    &lt;input type="text"&gt; <br>
+    &lt;input type="text"&gt; <br>
+    &lt;input type="checkbox" name="check"&gt; <br>
+    &lt;input type="checkbox" checked="checked" name="check"&gt; <br>
+    &lt;input type="checkbox" checked="checked" name="check"&gt; <br>
+    &lt;/form&gt; <br>
+    如果我们要查看被选中的checkbox可以使用以下几种方法: <br>
+    $("input:checked").length <br>
+    $("#form1 input:checked").length <br>
+    $("input[name=check]:checked").length <br>
+</p>
+
+<p>
+    <span class="mark">注意</span> <br>
+    1. 选择器中如果包含".", "#", "(", "]"等特殊字符, 需要使用转义字符; <br>
+    &lt;div id="id#b"&gt;bb&lt;/div&gt; <br>
+    需要这么使用: $("#id\\#b") <br>
+
+    2. 选择器中含有空格的注意事项: <br>
+    &lt;div class="test"&gt; <br>
+    &lt;div style="display: none">aa&lt;/div&gt; <br>
+    &lt;div style="display: none">bb&lt;/div&gt; <br>
+    &lt;div style="display: none">cc&lt;/div&gt; <br>
+    &lt;div class="test" style="display: none"&gt;dd&lt;/div&gt; <br>
+    &lt;/div&gt; <br>
+    &lt;div class="test" style="display: none"&gt;ee&lt;/div&gt; <br>
+    &lt;div class="test" style="display: none"&gt;ff&lt;/div&gt; <br>
+
+    $(".test :hidden").length //带空格的 4<br>
+    $(".test:hidden").length //不带空格的 3<br>
+    带空格的是选取class为test内部子元素为hidden一共有多少个. <br>
+    不带空格的是选取class为test的元素为hidden一共有多少个 <br>
+</p>
+
+<div>
+    <ul id="hah">
+        <li>小明</li>
+        <li>小丽</li>
+        <li>小芳</li>
+        <li>小红</li>
+        <li>小娥</li>
+    </ul>
+    <button id="btn">隐藏开关</button>
+</div>
+
+<script>
+
+//    $("#btn").click(function () {
+//        var test = $("#hah li:gt(2)");
+//        if (test.is(":visible")){ //is函数里是字符串选择器, :visible是可见性选择器
+//            test.hide();
+//        }else{
+//            test.show();
+//        }
+//    });
+    $("#btn").click(function () {
+        var test = $("#hah li:gt(2)");
+        test.toggle();
+    });
+    
+</script>
 
 </body>
 </html>
