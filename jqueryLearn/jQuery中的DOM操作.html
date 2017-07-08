@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery中的DOM操作</title>
+    <link rel="stylesheet" href="../common/css/base.css">
+    <script src="lib/jquery-3.2.1.js"></script>
+    <style>
+        textarea {
+            width: 100%;
+            height: 850px;
+            border-width: 0;
+            background-color: transparent;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>jQuery中的DOM操作</h1>
+
+<h2>创建节点</h2>
+<p>
+    <span class="mark">创建元素节点</span> <br>
+    $("&lt;li&gt;&lt;/li&gt;") 或者 $("&lt;li/&gt;") 推荐第一种 <br>
+    <span class="mark">创建文本节点</span> <br>
+    $("&lt;li&gt;茄子&lt;/li&gt;") <br>
+    <span class="mark">创建属性节点</span> <br>
+    $("&lt;li title="茄子" &gt;茄子&lt;/li&gt;") <br> <br>
+    总结: 所有的创建都可以用$()函数, 里面填入 html代码的字符串
+</p>
+
+<h2>插入节点</h2>
+
+<!--<p id="speck">我想说</p>  A-->
+<!--<span id="hello">你好</span> B-->
+
+<p><textarea disabled="disabled">
+    实例:
+    <p id="speck">我想说</p>  A
+    <span id="hello">你好</span> B
+
+    1. append()  A.append(B); 返回A
+    $("#speak").append($("#hello"));或者$("#speak").append("<span>你好</span>")
+    结果:<p>我想说<span>你好</span></p>
+    2. appendTo()  B.appendTo(A);  返回B
+    $("#hello").appendTo($("#speak"));
+    结果:<p>我想说<span>你好</span></p>
+    3. prepend();  A.append(B); 返回A
+    $("#speak").prepend($("#hello"));
+    结果: <p><span>你好</span>我想说</p>
+    4. prependTo(); B.prependTo(A); 结果返回B
+    $("#hello").prependTo($("#speck"));
+    结果: <p><span>你好</span>我想说</p>
+
+
+    5. after()  A.append(B); 返回A
+    $("#speck").after($("#hello"));
+    结果: <p>我想说</p><span>你好</span>
+    6. insertAfter() B.insertAfter(A);   返回
+    $("#hello").insertAfter($("#speck"));
+    结果: <p>我想说</p><span>你好</span>
+    7. before()   A.before(B) 返回A
+    $("#speck").before($("#hello"));
+    结果: <span>你好</span><p>我想说</p>
+    8. insertBefore() B.insertBefore(A) 返回B
+    $("#hello").insertBefore($("#speak"));
+    结果: <span>你好</span><p>我想说</p>
+
+    记忆方法
+    更长的方法, 是被插入到后者XX,  返回值, 谁在前面返回谁
+
+
+</textarea>
+</p>
+
+<h2>删除节点</h2>
+<p><textarea disabled="disabled" style="height: 500px">
+    实例:
+    <ul>
+        <li title="apple">苹果</li>
+        <li title="pineapple">菠萝</li>
+        <li title="peach">桃子</li>
+    </ul>
+
+    1. remove(); 删除该节点以及所有后代子节点, 返回一个被删除节点的引用, 仍然在以后可以使用
+    var $li = $("ul li:ep(1)").remove();  //删除菠萝
+    $li.appendTo("ul"); //又把菠萝添加到了ul上
+    remove(); 还可以传入参数
+    $("ul li").remove("li[title!=peach]"); //删除不是桃子的所有li节点
+
+    2. detach();
+    和remove方法不同点是, 可以在以后仍然使用被添加删除元素时, 可以保留之前的事件生效, remove方法不可以
+
+    3. empty();
+    清空元素,  清空元素内后代所有节点, 只剩下本身一对空标签.
+    </textarea>
+</p>
+
+<h2>复制节点</h2>
+<p><textarea disabled="disabled" style="height: 160px">
+    实例:
+    $("ul li").click(function(){
+        $(this).clone().appendTo("ul"); //复制当前点击的节点, 并追到到ul元素中
+    });
+    clone(); 默认复制的新元素并不具有任何行为, 如果想新元素也有这个click事件, 需要 在clone方法里传入一个true参数.
+    $(this).clone(true).appendTo("ul");
+</textarea>
+</p>
+
+<h2>替换节点</h2>
+<p><textarea disabled="disabled" style="height: 150px">
+    <p id="love">我爱你</p> 替换成 <span id="dqy">我爱你, dqy</span>
+    $("#love").replaceWith("<span id="dqy ">我爱你, dqy</span>");
+    或者
+    $("#dqy").replaceAll($("#love"));
+    注意: 被替换的元素的事件也会消失
+</textarea>
+</p>
+
+
+
+<h2>包裹节点</h2>
+<p><textarea disabled="disabled" style="height: 380px">
+    1. wrap(); 包装个体
+    <span id="test">Hello world</span>
+    $("#test").wrap("<div></div>"); 效果是<div><span id="test ">Hello world</span></div>
+
+    2. wrapAll(); 包装整体
+    <span>test</span>
+    test
+    <span>test</span>
+    $("span").wrapAll("<div></div>"); 效果是 <div><span>test</span>test<span>test</span></div>
+    如果在被包裹标签有子元素元素,也会被包裹进来
+
+    3. wrapInner(); 包装内部
+    <span>我是lwj</span>
+    $("span").wrapInner("<b></b>"); 效果是 <span><b>我是lwj</b></span>
+    该方法将每一个匹配的元素的字内容, 包括文本节点用包装标签包裹起来, 有多个元素, 都包装一起
+</textarea>
+</p>
+
+<h2>属性操作</h2>
+<p><textarea disabled="disabled" style="height: 260px">
+    1. 获取属性和设置属性
+    实例
+    <p title="hehe" id="test1"></p>
+    获取值 var title = $("#test1").attr("title");
+    设置值 $("#test1").attr("title", "lwj");
+    如果要设置多个值  $("#test1").attr({"title":"your title", "name":"test"});
+    注意: jQuery中还有很多都是这样同一个函数, 既可以获取值, 也可以设置值 html(), text(), val(), css(),height(), width()等
+
+    2. 删除属性
+    $("#test1").removeAttr("title");
+</textarea>
+</p>
+
+
+<h2>样式操作</h2>
+<p><textarea disabled="disabled" style="height: 700px">
+    <p class="myClass">我的水果</p>
+    1. 样式的获取和设置
+    获取样式 var p_class = $("p").attr("class"); 获取p元素的class
+    设置样式 $("p").attr("class", "mm");
+    结果: <p class="mm">我的水果</p>
+
+    2. 追加样式
+    $("p").addClass("another");
+    结果: <p class="mm another">我的水果</p> 如果两个class设置了同一个css属性, 后者会覆盖前者的
+
+    3. 移除样式
+    $("#test2").removeClass("mm");
+    $("#test2").removeClass("mm").removeClass("another");
+    $("#test2").removeClass("mm another");
+    $("#test2").removeClass();
+    后三个的效果都是一样的, 不带参数, 会移除该元素的所有样式
+
+    4. 切换样式
+    <p id="dd">我的声卡</p>
+    <button id="ss">切换class</button>
+    $("#ss").click(function () {
+        $("#dd").toggleClass("test");
+    });
+    效果:点击button, 如果按钮有test的类, 就删掉这个类, 没有就添加test类
+    类似toggle()显示和隐藏元素的效果
+
+    5. 判断是否含有某个样式
+    <span id="ff" class="zz"></span>
+    var $zz = $("#ff").hasClass("zz"); 返回值是布尔值, 实际内部是调用了is方法, $("#ff").is(".zz");
+</textarea>
+</p>
+
+<h2>设置和获取HTML, 文本和值</h2>
+<p><textarea disabled="disabled" style="height: 800px">
+    1. html()
+    此方法类似JavaScript原生的innerHTML属性, 可以用来读取或者设置某个元素中的HTML内容.
+    <p><span>我的哥</span></p>
+    console.info($("p").html());
+    结果: <span>我的哥</span>
+    $("p").html("<b>厉害了</b>");
+    console.info($("p").html());
+    结果: <b>厉害了</b>
+
+    2. text()
+    此方法类似JavaScript原生的innerText属性, 可以用来读取或者设置某个元素中的文本内容.
+    <p id="aaa"><span>我的哥,</span>你好</p>
+    $("#aaa").text();  会提取子节点所有的文本节点的内容拼接在一起
+    结果: 我的哥, 你好
+    $("#aaa").text("加油"); 元素的所有的子节点都被清空替换成了文本节点 "加油"
+    结果: <p id="aaa ">加油</p>
+
+    3. val()
+    此方法类似JavaScript中的value属性, 可以用来设置和获取元素的值. 无论元素是文本框, 下拉列表还是单选框
+    都可以返回元素的值, 如果元素为多选, 则返回一个包含所有选择的值的数组.
+    <input type="text" value="请输入xxx" id="input1">
+        $("#input1").focus(function () { //获的焦点
+        var text = $(this).val();
+        if (text == "请输入xxx"){ //这里可以把 "请输入xxx" 替换为this.defaultValue,当前文本框的默认值
+            $(this).val("");
+        }
+    });
+
+    $("#input1").blur(function () { //失去焦点
+        var text = $(this).val();
+        if (text == ""){
+            $(this).val("请输入xxx");
+        }
+    });
+
+</textarea>
+</p>
+
+
+
+<script>
+    $("#input1").focus(function () {
+        var text = $(this).val();
+        if (text == "请输入xxx"){
+            $(this).val("");
+        }
+    });
+
+    $("#input1").blur(function () {
+        var text = $(this).val();
+        if (text == ""){
+            $(this).val("请输入xxx");
+        }
+    });
+</script>
+
+</body>
+</html>
