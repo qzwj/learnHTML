@@ -5,15 +5,6 @@
     <title>jQuery中的DOM操作</title>
     <link rel="stylesheet" href="../common/css/base.css">
     <script src="lib/jquery-3.2.1.js"></script>
-    <style>
-        textarea {
-            width: 100%;
-            height: 850px;
-            border-width: 0;
-            background-color: transparent;
-            font-size: 18px;
-        }
-    </style>
 </head>
 <body>
 
@@ -191,7 +182,7 @@
 </p>
 
 <h2>设置和获取HTML, 文本和值</h2>
-<p><textarea disabled="disabled" style="height: 800px">
+<p><textarea disabled="disabled" style="height: 1470px">
     1. html()
     此方法类似JavaScript原生的innerHTML属性, 可以用来读取或者设置某个元素中的HTML内容.
     <p><span>我的哥</span></p>
@@ -212,6 +203,7 @@
     3. val()
     此方法类似JavaScript中的value属性, 可以用来设置和获取元素的值. 无论元素是文本框, 下拉列表还是单选框
     都可以返回元素的值, 如果元素为多选, 则返回一个包含所有选择的值的数组.
+    以下是val()取值和设置值的简单应用:
     <input type="text" value="请输入xxx" id="input1">
         $("#input1").focus(function () { //获的焦点
         var text = $(this).val();
@@ -227,26 +219,79 @@
         }
     });
 
+    select设置值
+    <select name="" id="single">
+        <option value="1">11</option>
+        <option value="2">22</option>
+        <option value="3">33</option>
+    </select>
+    $("#single").val(["2"]); 或者 $("#single").val("2");
+    val()的参数可以是一个数组, 传入多个值, select有multiple这个参数时, 可以同时选中多个值, 数组可以放入["1", "2"].
+    option如果没有value这个属性, 他的文本节点值就是他默认的value值.
+
+    多选
+    <form action="#">
+        <input type="checkbox" value="1">
+        <input type="checkbox" value="2">
+        <input type="checkbox" value="3">
+    </form>
+    <input type="checkbox" value="4">
+    $("form :checkbox").val(["1", "2", "4"]); //效果是选中1和2, 4不在form里面不会被选中
+    :checkbox 这样的表单过滤选择器 肯定会返回的是一个集合, 所有val里面必须传入一个数组, 数组的值可以为1个
+
+    单选
+    <input type="radio" value="41" name="ak">
+    <input type="radio" value="42" name="ak">
+    <input type="radio" value="43" name="ak">
+    $(":radio").val(["41", "42"]);  // 选中42
+    同上, val()也需要传入一个数组, 如果name值都相同, 则数组的最后一个值, 才会被选中. 一般只会传入一个参数
+
+</textarea>
+</p>
+
+<h2>遍历节点</h2>
+<p><textarea disabled="disabled" style="height: 850px">
+    1. children()
+    该方法用于取得元素的子元素集合, 取得的集合里面的是DOM的原生对象
+    var dd = $("body").children();
+    alert(dd[0].innerHTML);
+
+    2. next()
+    该方法用于取得匹配元素后面紧邻的同辈元素
+    <!--<span id="zxc"></span>-->
+    <!--<span>打豆豆</span>-->
+    $("#zxc").next() // 会找到打豆豆
+
+    3. prev()
+    该方法用于取得匹配元素前面紧邻的同辈元素
+
+    4. siblings()
+    该方法用于取得匹配元素前后所有的同辈元素
+
+    5. closest() 一定要传入参数, 返回返回一个空的jq对象
+    该方法用于取得最近的匹配元素, 首选检查当前元素是否匹配, 匹配直接返回, 不匹配则向上查找父元素, 逐级向上直到找到匹配选择器的元素
+    如果都没找到, 返回一个空的jQuery对象.  需要传入一个选择器字符串的参数表示要查找的元素
+    <div id="uz">
+        <div id="uu">
+            <span id="zxc"></span>
+      </div>
+    </div>
+    <div id="ud"></div>
+    $("#zxc").closest("div"); //会找到uu, 不会找到ud
+    $("#zxc").closest("span") //会直接找到zxc
+
+    6. parent()
+    查找父元素, 可以传入参数, 可以不传入, 只返回最近的父元素
+
+    7. parents()
+    查找父元素的集合, 可以传入参数, 可以不传, 返回所有符合条件的父元素
 </textarea>
 </p>
 
 
 
-<script>
-    $("#input1").focus(function () {
-        var text = $(this).val();
-        if (text == "请输入xxx"){
-            $(this).val("");
-        }
-    });
 
-    $("#input1").blur(function () {
-        var text = $(this).val();
-        if (text == ""){
-            $(this).val("请输入xxx");
-        }
-    });
-</script>
+
 
 </body>
 </html>

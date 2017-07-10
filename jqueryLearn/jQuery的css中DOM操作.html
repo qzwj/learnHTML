@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery的css中DOM操作</title>
+    <link rel="stylesheet" href="../common/css/base.css">
+    <script src="./lib/jquery-3.2.1.js"></script>
+</head>
+<body>
+
+<h1>jQuery的css中DOM操作</h1>
+
+<p style="padding: 30px">
+    CSS-DOM技术简单来说就是读取和设置style对象的各种属性. 但是缺陷是不能获得外部css设置的样式信息. 在jQuery中使用css()可以做到.
+</p>
+
+<p><textarea disabled="disabled" style="height: 1100px;">
+    css()
+    无论设置的样式是style, 还是内联, 还是外部css导入都可以获取到样式信息.
+
+    获取css样式信息
+    $("h1").css("color"); //获取h1元素的样式颜色
+
+    设置单个css信息
+    $("p").css("font-size", "20px");
+
+    设置多个css信息
+    $("p").css({"fontSize" : "30px", "backgroundColor" : "#ccc"});
+
+    设置的时候css样式的时候, 属性名字内有"-"的, 可以用驼峰命名替换"-". 属性最好都加上""包裹
+
+    两种获取元素的高度
+    $("p").height();   // 元素在页面实际的高度, 不带单位, 与样式无关
+    $("p").css("height");  // 获取的高度与样式的设置有关, 可能得到auto, 也可能得到"10px"之类的字符串
+    $("p").height(100); // 单位默认px
+    $("p").height("10em"); //特殊单位特殊标注
+
+    width() 同理
+
+    元素定位常用方法:
+    1. offset()
+    获取元素在当前视窗的相对偏移, 返回的对象包含两个属性. 即top和left, 只对可见元素有效
+    var offset = $("p").offset();
+    var left = offset.left;
+    var top = offset.top;
+
+    2. position()
+    获取元素相对于最近的一个position样式属性设置为relative或者absolute的祖父节点的相对偏移, 与offset()一样, 返回对象
+    包裹数个属性, top或者left.
+    var position = $("p").position();
+    var left = position.left;
+    var top = position.top;
+
+    3. scrollTop()和scrollLeft()
+    获取元素的滚动条距顶端的距离和左侧的距离
+    var $p = $("p");
+    var scrollTop = $p.scrollTop();
+    var scrollLeft = $p.scrollLeft();
+
+    以上两个方法还是传入一个参数 (有滚动区域才会生效)
+    $("textarea").scrollTop(300);
+    $("textarea").scrollLeft(300);
+
+</textarea>
+</p>
+
+
+
+
+</body>
+</html>
