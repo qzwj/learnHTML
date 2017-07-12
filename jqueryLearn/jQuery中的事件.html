@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery中的事件</title>
+    <link rel="stylesheet" href="../common/css/base.css">
+    <script src="./lib/jquery-3.2.1.js"></script>
+</head>
+<body>
+
+<h1>jQuery中的事件</h1>
+
+<p><textarea disabled="disabled" style="height: 1100px;">
+    1. 加载DOM
+    通常我们需要在html页面加载好了之后在加载js文件执行一些方法.
+    此时我们需要经常用到一个事件方法window.onload=function(){}
+    这个方法不仅需要html中所有的DOM结构都加载好, 而且还需要DOM关联的文件都加载好, 才会执行函数里面的内容.
+
+    jQuery中也有相同功能的函数 $(document).ready(function(){});
+    特点:
+    a. 这个方法只需要在html中DOM加载好后就可以执行函数内容, 不需要等关联文件也加载好. 提高了页面的响应速度.
+    b. 可以多次加载. 按顺序执行 1, 2, 而前者window.onload()只能执行2, 后者会覆盖前面函数的引用
+    $(document).ready(function(){
+        // 执行1
+    });
+    $(document).ready(function(){
+        // 执行2
+    });
+    window.onload(function(){
+        // 执行1
+    });
+    window.onload(function(){
+        // 执行2
+    });
+    c. 可以缩写
+    第一种(常用)
+    $(function(){
+        // 代码
+    })
+    第二种不常用
+    $(document)可以简写$(), $()函数不带参数, 默认参数是document, 所以简写形式如下
+    $().ready(function(){
+        // 代码
+    });
+</textarea>
+</p>
+
+</body>
+</html>
