@@ -5,12 +5,17 @@
     <title>jQuery中的事件</title>
     <link rel="stylesheet" href="../common/css/base.css">
     <script src="./lib/jquery-3.2.1.js"></script>
+    <style>
+        .add {
+            background-color: firebrick;
+        }
+    </style>
 </head>
 <body>
 
 <h1>jQuery中的事件</h1>
 
-<p><textarea disabled="disabled" style="height: 1100px;">
+<p><textarea disabled="disabled" style="height: 2250px;">
     1. 加载DOM
     通常我们需要在html页面加载好了之后在加载js文件执行一些方法.
     此时我们需要经常用到一个事件方法window.onload=function(){}
@@ -42,10 +47,132 @@
     $().ready(function(){
         // 代码
     });
+    注意: jQuery也可以window.onload的效果如果
+    $(window).load(function()){
+
+    }
+
 
     2. 事件绑定
+    我们可以在文档装载完成后, 给元素绑定事件完成某些操作. 可以使用bind()绑定事件
+    格式: bind(type,[data],fn)
+    第一个参数是事件的类型: 有 blur, focus, load, resize, scroll, unload, click, dblclick, mousedown,
+    mouseup, mousemove, mouseover, mouseout, mouseenter, mouseleave, change, select, submit, keydown,
+    keypress, keyup和error等, 也可以是自定义的名称. 注意: 和某同的js事件绑定相比, 少了"on"
+    第二个参数是可选参数, 作为event.data属性值传递给事件对象的额外数据对象.
+    第三个是用来绑定事件的函数.
+
+    <h2 id="click_me">点击我</h2>
+    <p style="display: none" >jQuery很厉害, 很厉害, 很厉害. 真的很厉害, 真的很厉害,
+    真的很厉害,真的很厉害,真的很厉害,真的很厉害,真的很厉害,</p>
+    如果要点击h2让p标签显示, 我们可以有一下这么多的方法实现:
+
+//    $("#click_me").bind("click", 1, function (e) {
+//        alert(e.data);
+//        $(this).next().toggle();
+//    });
+
+//    $("#click_me").bind("mouseover", function () {
+//        $(this).next().show();
+//    }).bind("mouseout", function () {
+//       $(this).next().hide();
+//    });
+
+//    $("#click_me").mouseover(function () {
+//        $(this).next().show();
+//    }).mouseout(function () {
+//        $(this).next().hide();
+//    });
+
+//    $("#click_me").hover(function () {
+//        $(this).next().show();
+//    }, function () {
+//        $(this).next().hide();
+//    });
+
+// 不起作用
+//    $("#click_me").toggle(function () {
+//        $(this).next().show();
+//    }, function () {
+//        $(this).next().hide();
+//    });
+
+//    $("#click_me").hover(function () {
+//        $(this).next().show();
+//        $(this).addClass("add");
+//    }, function () {
+//        $(this).next().hide();
+//        $(this).removeClass("add");
+//    });
+
+    以上像 click, mouseover, mouseout这类事件, 我们经常用到, 可以有简写形式,
+    像bind()这样直接绑定在jquery对象上. $("h1").click();
+
+    合成事件
+    hover(enter, leave) 方法用于模拟光标悬停事件, 替代 bind("mouseenter")和bind("mouseleave")
+
+    toggle(f1, f2...fn) 模拟鼠标连续单机事件, 不知道是不是jquery升级后删除了这个功能
+    实践中发现, 并不能给toggle绑定事件, 只能当做jquery对象, 作为元素的显示和隐藏
+
 </textarea>
 </p>
+
+
+<!--<h2 id="click_me">点击我</h2>-->
+<!--<p style="display: none" id="show_msg">jQuery很厉害, 很厉害, 很厉害. 真的很厉害, 真的很厉害,真的很厉害,真的很厉害,-->
+    <!--真的很厉害,真的很厉害,真的很厉害,真的很厉害,真的很厉害,</p>-->
+<script>
+
+//    $("#click_me").click(function () {
+//        var $next = $(this).next();
+//        if ($next.is(":visible")){
+//            $next.hide();
+//        }else{
+//            $next.show();
+//        }
+//    });
+
+//    $("#click_me").bind("click", 1, function (e) {
+//        alert(e.data);
+//        $(this).next().toggle();
+//    });
+    
+//    $("#click_me").bind("mouseover", function () {
+//        $(this).next().show();
+//    }).bind("mouseout", function () {
+//       $(this).next().hide();
+//    });
+
+//    $("#click_me").mouseover(function () {
+//        $(this).next().show();
+//    }).mouseout(function () {
+//        $(this).next().hide();
+//    });
+
+//    $("#click_me").hover(function () {
+//        $(this).next().show();
+//    }, function () {
+//        $(this).next().hide();
+//    });
+
+// 不起作用
+//    $("#click_me").toggle(function () {
+//        $(this).next().show();
+//    }, function () {
+//        $(this).next().hide();
+//    });
+
+//    $("#click_me").hover(function () {
+//        $(this).next().show();
+//        $(this).addClass("add");
+//    }, function () {
+//        $(this).next().hide();
+//        $(this).removeClass("add");
+//    });
+
+
+
+</script>
 
 </body>
 </html>
