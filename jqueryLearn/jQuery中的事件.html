@@ -117,15 +117,15 @@
 </p>
 
 <h2>事件冒泡</h2>
-<p><textarea disabled="disabled" style="height: 1000px;">
+<p><textarea disabled="disabled" style="height: 1300px;">
     在页面上可以有多个事件, 也可以多个元素响应一个类型事件. 如果一个元素套在另外一个元素里, 都绑定click事件
     就会产生事件冒泡的效果(前提做其他处理)
-    <!--<div id="outer">-->
-        <!--外部-->
-        <!--<span id="inner">内部</span>-->
-        <!--外部-->
-    <!--</div>-->
-    <!--<span id="msg"></span>-->
+    <div id="outer">
+        外部
+        <span id="inner">内部</span>
+        外部
+    </div>
+    <span id="msg"></span>
     $("#outer").click(function(event){
         $("#msg").text("我是外部");
     });
@@ -171,31 +171,126 @@
     如果没有参数, 则删除所有绑定的事件
     如果提供了事件类型作为参数, 只删除该类型事件
     如果在绑定时的处理函数作为第二个参数, 则只有这个特定的函数会被删除
+</textarea>
+</p>
+
+
+<h2>模拟操作</h2>
+<p><textarea disabled="disabled" style="height: 1300px;">
+    1. 常用模拟
+    以上的例子都是通过单击按钮,才能触发click事件,  但是有时,我们需要模拟用户操作达到单击的效果.
+    例如用户在进入页面后就会触发click事件, 而不用用户主动点击
+    <div id="mydiv">
+        点击我
+    </div>
+    $("#mydiv").click(function(){
+        alert(1);
+    });
+    $("#mydiv").trigger("click"); 或者 $("#mydiv").click(); 都会主动触发
+
+    2. 自定义触发
+    <div id="custome">
+        自定义触发
+    </div>
+    $("#custome").bind("myClick", function () {
+        alert("自定义");
+    });
+    $("#custome").trigger("myClick");
+
+    3. 传递数据
+    $("#custome").bind("myClick", function(event, msg1, msg2){
+        alert("msg1:"+msg1+",msg2:"+msg2);
+    });
+    $("#custome").trigger("myClick", ["哈哈", "呵呵"]);
+
+    4. 执行默认行为
+    trigger()方法触发事件后, 会执行浏览器默认操作. 比如
+    $("input").trigger("focus"); 这个不仅会触发foucs, 还会使元素本身获取焦点(浏览器默认操作)
+    如果执行触发focus事件, 不想执行浏览器默认操作, 可以使用jq的另外一个操作 triggerHandler()方法.
+    $("input").triggerHandler("focus");
+    该方法会触发input元素上特定的绑定事件, 同时取消浏览器对此事件的默认操作, 不会获得焦点
+
+    5. 绑定多个事件
+    <div id="ee">
+        点击我
+    </div>
+    $("#ee").bind("mouseover mouseout", function () {
+       $(this).toggleClass("add");
+    });
+
 
 </textarea>
 </p>
 
-<div id="outer">
-    点击外部
-    <span id="inner">点击内部</span>
-    点击外部
-</div>
-<span id="msg"></span>
+<!--<div id="ee">-->
+    <!--点击我-->
+<!--</div>-->
+
+
+<!--<input type="text" placeholder="请输入你的大名">-->
+
+<!--<div id="outer">-->
+    <!--点击外部-->
+    <!--<span id="inner">点击内部</span>-->
+    <!--点击外部-->
+<!--</div>-->
+<!--<span id="msg"></span>-->
 
 <!--<h2 id="click_me">点击我</h2>-->
 <!--<p style="display: none" id="show_msg">jQuery很厉害, 很厉害, 很厉害. 真的很厉害, 真的很厉害,真的很厉害,真的很厉害,-->
     <!--真的很厉害,真的很厉害,真的很厉害,真的很厉害,真的很厉害,</p>-->
+
+<!--<div id="mydiv">-->
+    <!--点击我-->
+<!--</div>-->
+
+<!--<div id="youdiv">-->
+    <!--点击我-->
+<!--</div>-->
+
+<!--<div id="custome">-->
+    <!--自定义触发-->
+<!--</div>-->
+
 <script>
 
-    $("#outer").click(function(event){
-        $("#msg").text("我是外部");
-    });
-    $("#inner").click(function(event){
-        $("#msg").text("我是内部");
-//        event.preventDefault();
-        event.stopPropagation();
-        return false;
-    });
+//    $("#ee").bind("mouseover mouseout", function () {
+//       $(this).toggleClass("add");
+//    });
+
+//    $("input").trigger("focus");
+
+//    $("input").focus(function () {
+//        alert(11)
+//    });
+//
+//    $("input").triggerHandler("focus");
+//    $("#custome").bind("myClick", function () {
+//       alert("自定义");
+//    });
+//    $("#custome").trigger("myClick");
+
+//    $("#mydiv").click(function () {
+//        alert(1);
+//    });
+//
+//    $("#youdiv").click(function () {
+//        alert(2);
+//    });
+//
+//    $("div").trigger("click");
+//    $("#mydiv").click();
+//    $("#mydiv").trigger("click");
+
+//    $("#outer").click(function(event){
+//        $("#msg").text("我是外部");
+//    });
+//    $("#inner").click(function(event){
+//        $("#msg").text("我是内部");
+////        event.preventDefault();
+//        event.stopPropagation();
+//        return false;
+//    });
 
 
 
