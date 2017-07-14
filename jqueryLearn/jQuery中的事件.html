@@ -113,15 +113,91 @@
 
     toggle(f1, f2...fn) 模拟鼠标连续单机事件, 不知道是不是jquery升级后删除了这个功能
     实践中发现, 并不能给toggle绑定事件, 只能当做jquery对象, 作为元素的显示和隐藏
+</textarea>
+</p>
+
+<h2>事件冒泡</h2>
+<p><textarea disabled="disabled" style="height: 1000px;">
+    在页面上可以有多个事件, 也可以多个元素响应一个类型事件. 如果一个元素套在另外一个元素里, 都绑定click事件
+    就会产生事件冒泡的效果(前提做其他处理)
+    <!--<div id="outer">-->
+        <!--外部-->
+        <!--<span id="inner">内部</span>-->
+        <!--外部-->
+    <!--</div>-->
+    <!--<span id="msg"></span>-->
+    $("#outer").click(function(event){
+        $("#msg").text("我是外部");
+    });
+    $("#inner").click(function(event){
+        $("#msg").text("我是内部");
+    });
+    我们点击了span, 会响应span的点击事件, 并且这个事件会传递到外部的div, 因为div也绑定了click事件, 所以div也能监听到
+    传递span传递过来的事件, 所以最终的结果是, msg的span显示 "我是外部", 实质是指 这个msg的span被修改了两次.
+
+    事件冒泡: 在html-dom节点中, 子节点可以把事件一层一层向上传递给父节点.
+    阻止事件冒泡的效果:
+    jq的方法: event.stopPropagation();
+    阻止默认行为: (单击超链接后会跳转, 单击 "提交" 按钮后表单会提交)
+    jq的方法: event.preventDefault();
+    如果我们希望对象同时阻止事件冒泡和默认行为, 可以有一种简单方法, return false;
+
+    事件捕获: 从上往下传递, jq不支持, 不是所有的主流浏览器都支持这个
+
+    事件对象的属性:
+    1. event.type
+    效果: click, mouseover....
+    2. event.preventDefault()
+    "阻止默认行为, js默认方法, jq加强使之兼容ie等各种浏览器"
+    3. event.stopPropagation()
+    "阻止事件冒泡, js默认方法, jq加强使之兼容ie等各种浏览器"
+    4. event.target
+    "获取到触发事件的元素, jq加强, 避免不同浏览器的不同标准的差异"
+    5. event.relatedTarget
+    "mouseover和mouseout绑定的元素可以通过target访问, 相关元素可以
+    通过event.relatedTarget访问, jq是对齐封装,兼容"
+    6. event.pageX, evnet.pageY
+    "获取光标相对于页面的x,和y坐标, 没有使用jq, ie浏览器是event.x, event.y
+    firefox浏览器, event.pageX, event.pageY. 如果页面有滚动条还要加滚动条的宽度和高度"
+    7. event.which
+    鼠标的哪一个键 1左, 2中, 3右
+    8. event.metaKey
+    针对不同浏览器的ctrl按键解释不同, jq也做了封装. 规定event.metaKey为键盘事件获取 ctrl按键
+    更多属性, 查看jq文档
+
+
+    移除事件属性
+    unbind([type], [data]);
+    如果没有参数, 则删除所有绑定的事件
+    如果提供了事件类型作为参数, 只删除该类型事件
+    如果在绑定时的处理函数作为第二个参数, 则只有这个特定的函数会被删除
 
 </textarea>
 </p>
 
+<div id="outer">
+    点击外部
+    <span id="inner">点击内部</span>
+    点击外部
+</div>
+<span id="msg"></span>
 
 <!--<h2 id="click_me">点击我</h2>-->
 <!--<p style="display: none" id="show_msg">jQuery很厉害, 很厉害, 很厉害. 真的很厉害, 真的很厉害,真的很厉害,真的很厉害,-->
     <!--真的很厉害,真的很厉害,真的很厉害,真的很厉害,真的很厉害,</p>-->
 <script>
+
+    $("#outer").click(function(event){
+        $("#msg").text("我是外部");
+    });
+    $("#inner").click(function(event){
+        $("#msg").text("我是内部");
+//        event.preventDefault();
+        event.stopPropagation();
+        return false;
+    });
+
+
 
 //    $("#click_me").click(function () {
 //        var $next = $(this).next();
