@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery的动画</title>
+    <link rel="stylesheet" href="../common/css/base.css" >
+    <script src="./lib/jquery-3.2.1.js"></script>
+    <style>
+        .test1{
+            width: 100px;
+            height: 100px;
+            background-color: #f00;
+            position: relative;
+        }
+
+    </style>
+</head>
+<body>
+
+<h1>jQuery的动画</h1>
+
+
+<h2>基本动画</h2>
+<p><textarea disabled="disabled" style="height: 350px">
+    1. show()和hide()
+    前面的例子, 我们已经做过很多关于元素的显示和隐藏, dispaly属性设置为none就隐藏, 不为none就显示.
+    这两个函数在执行改变操作前, 都会自动记住之前的默认值
+    时间越长动画越明显
+    效果: hide() 减少内容宽度(从下到上)  show() 增加内容宽度(从上到下)
+
+    2. fadeIn()和fadeOut()
+    用法同上, 效果不同, 针对的透明度
+
+    3. slideUp()和slideDown()
+    用法同上, 效果不同,  up从上到下隐藏, down从下到上显示
+
+    注意:方法内都可以放 数值(毫秒) "normal"(400ms), "fast"(200ms), "slow"(600ms)
+</textarea>
+</p>
+
+<h2>自定义动画</h2>
+<p><textarea disabled="disabled" style="height: 1500px">
+    普通的动画不能满足很多需求.
+
+    1.自定义简单动画:
+    animate(params, [speed], [callback]) 自定义动画
+    1. params,一个包含样式属性和值的映射 如:{"key1" : "value1", "key2" : "value2"}
+    2. speed 速度(可选) 时间
+    3. callback: 在动画完成时执行的函数, 可选
+
+    把一个长和宽为100px红色的div, 向右移动800px在2秒内
+    <!--<div id="animate" class="test1"></div>-->
+    $("#animate").click(function () {
+        $(this).animate({left: "800px"}, 2000);
+    });
+
+    2.累加/累减动画
+    $(this).animate({left: "+=800px"}, 2000);
+    $(this).animate({left: "-=800px"}, 2000);
+
+    3.多重动画
+    $(this).animate({left: "800px", height : "200px"}, 2000); 一起执行
+
+    先后顺序执行
+    $(this).animate({left: "800px"}, 2000);
+    $(this).animate({height : "200px"}, 2000);
+    或者
+    $(this).animate({left: "800px"}, 2000);
+           .animate({height : "200px"}, 2000);
+
+    4. 综合动画
+    $(this).animate({left:"400px", height:"200px", opacity:"1"}, 3000)
+            .animate({width:"200px", opacity:0.5}, 3000)
+            .fadeOut("slow");
+
+    5. 动画回调函数
+    $(this).animate({left:"400px", height:"200px", opacity:"1"}, 3000)
+            .animate({width:"200px", opacity:0.5}, 3000, function(){
+        alert("动画执行完毕, 你想做什么就这在");
+    });
+    这个回调函数, 使用于所有动画效果, 基础动画也可以
+
+
+    6. 停止动画
+    stop([clearQueue], [gotoEnd])  clearQueue是否清空未执行完动画的队列, gotoEnd是否跳转到动画末尾状态 都是boolean
+
+    7. 判断元素是否处于动画状态
+    $(element).is(":animated")
+
+    8. 延迟动画
+    delay()
+    用法: animate().delay()
+
+    9. 其他动画(常用)
+    toggle()        切换元素的可见状态.
+    slideToggle()   通过高度变化切换元素的可见状态
+    fadeTo()        通过不透明度以渐进方式调整到指定的值 fadeTo(600, 0.2). 不透明度0.2, 600是时间ms
+    fadeToggle()    通过不透明度切换元素可见状态
+
+    注意: animate()方法应用多个属性的动画都是同时的, 链式调用就是按照顺序发生
+
+
+</textarea>
+</p>
+
+<div id="stop">
+    停止
+</div>
+<div id="animate" class="test1">
+</div>
+
+
+<!--<p id="show">显示我</p>-->
+<!--<h2 id="control">哈哈</h2>-->
+
+<script>
+
+    $("#stop").click(function () {
+//        $("#animate").fadeTo(2000, 0.4);
+//        $("#animate").fadeToggle();
+        $("#animate").slideToggle();
+    });
+
+    $("#animate").click(function () {
+        $(this).animate({left:"400px", height:"200px", opacity:"1"}, 3000)
+            .animate({width:"200px", opacity:0.5}, 3000)
+            .fadeOut("slow");
+//        $(this).animate({left: "+=500px", height: "200px"}, 3000);
+//        $(this).animate({left: "800px"}, 2000);
+//        $(this).animate({height : "200px"}, 2000);
+    });
+
+    $("#control").click(function () {
+        var content = $("#show");
+        if (content.is(":visible")){
+//            content.fadeOut(5000);
+//            content.hide(2000);
+            content.slideUp();
+        }else{
+//            content.fadeIn(5000);
+//            content.show(2000);
+            content.slideDown();
+        }
+    });
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>find方法</title>
+    <link rel="stylesheet" href="../common/css/base.css">
+    <script src="./lib/jquery-3.2.1.js"></script>
+</head>
+<body>
+
+<h1>jQuery的find()方法</h1>
+
+<p>
+    find()的作用就是找到子元素里符合条件的集合
+</p>
+
+<div id="big">
+    <div id="inner">
+        <ul>
+            <li class="mark">小明</li>
+            <li>小红</li>
+            <li>小芳</li>
+            <li>小丽</li>
+            <li>小送</li>
+        </ul>
+    </div>
+</div>
+
+
+<script>
+    alert($("#big").find("li"));
+</script>
+
+</body>
+</html>
