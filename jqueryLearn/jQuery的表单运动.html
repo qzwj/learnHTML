@@ -5,6 +5,12 @@
     <title>jQuery的表单</title>
     <link rel="stylesheet" href="../common/css/base.css">
     <script src="./lib/jquery-3.2.1.js"></script>
+    <style>
+        .focus {
+            border: 1px #f00 solid;
+            background-color: #fcc;
+        }
+    </style>
 </head>
 <body>
     <h1>表单标签</h1>
@@ -13,5 +19,67 @@
         表单域: 文本框, 密码框... <br>
         表单按钮: 提交按钮, 复位按钮, 一般按钮 <br>
     </p>
+
+    <h2>表单实例</h2>
+    <form action="#">
+        <fieldset>
+            <legend>个人基本信息</legend>
+            <div>
+                <label for="username">姓名</label>
+                <input type="text" id="username">
+            </div>
+
+            <div>
+                <label for="password">密码</label>
+                <input type="password" id="password">
+            </div>
+            <div>
+                <label for="details">详细信息</label>
+                <textarea style="height: 100px; border: 1px black solid" id="details"></textarea>
+            </div>
+        </fieldset>
+    </form>
+
+    <script>
+        $(":input").focus(function () {
+            $(this).addClass("focus");
+        }).blur(function () {
+            $(this).removeClass("focus");
+        });
+    </script>
+
+    <p><textarea disabled="disabled" style="height: 1500px">
+        上面的这个效果就是下面被注释了的代码,  fieldset标签可以理解为就是form的边框, legend是标题
+        label标签的for绑定 input的id属性可以实现点击label的文字, 获取input的焦点
+        js代码里就是给获取所有的input标签给获取焦点的时候添加一个样式, 失去焦点的时候在移除这个样式
+
+        注意: $(":input") 和 $("input")不一样, 前者是选取所有的表单元素, 包括input, button, textarea等, 而后者只是选择所有的input
+            <!--<form action="#">-->
+                <!--<fieldset>-->
+                    <!--<legend>个人基本信息</legend>-->
+                    <!--<div>-->
+                        <!--<label for="username">姓名</label>-->
+                        <!--<input type="text" id="username">-->
+                    <!--</div>-->
+                    <!--<div>-->
+                        <!--<label for="password">密码</label>-->
+                        <!--<input type="password" id="password">-->
+                    <!--</div>-->
+                    <!--<div>-->
+                        <!--<label for="details">详细信息</label>-->
+                        <!--<textarea style="height: 100px; border: 1px black solid" id="details"></textarea>-->
+                    <!--</div>-->
+                <!--</fieldset>-->
+         <!--</form>-->
+        <!--<script>-->
+            <!--$(":input").focus(function () {-->
+                <!--$(this).addClass("focus");-->
+            <!--}).blur(function () {-->
+                <!--$(this).removeClass("focus");-->
+            <!--});-->
+        <!--</script>-->
+    </textarea>
+    </p>
+
 </body>
 </html>
