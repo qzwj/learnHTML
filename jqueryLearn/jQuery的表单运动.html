@@ -10,6 +10,9 @@
             border: 1px #f00 solid;
             background-color: #fcc;
         }
+        .add {
+            background-color: orange;
+        }
     </style>
 </head>
 <body>
@@ -48,38 +51,46 @@
         });
     </script>
 
-    <p><textarea disabled="disabled" style="height: 1500px">
-        上面的这个效果就是下面被注释了的代码,  fieldset标签可以理解为就是form的边框, legend是标题
+    <p><textarea disabled="disabled" style="height: 200px">
+        上面的效果具体实现看源码
+        fieldset标签可以理解为就是form的边框, legend是标题
         label标签的for绑定 input的id属性可以实现点击label的文字, 获取input的焦点
         js代码里就是给获取所有的input标签给获取焦点的时候添加一个样式, 失去焦点的时候在移除这个样式
-
         注意: $(":input") 和 $("input")不一样, 前者是选取所有的表单元素, 包括input, button, textarea等, 而后者只是选择所有的input
-            <!--<form action="#">-->
-                <!--<fieldset>-->
-                    <!--<legend>个人基本信息</legend>-->
-                    <!--<div>-->
-                        <!--<label for="username">姓名</label>-->
-                        <!--<input type="text" id="username">-->
-                    <!--</div>-->
-                    <!--<div>-->
-                        <!--<label for="password">密码</label>-->
-                        <!--<input type="password" id="password">-->
-                    <!--</div>-->
-                    <!--<div>-->
-                        <!--<label for="details">详细信息</label>-->
-                        <!--<textarea style="height: 100px; border: 1px black solid" id="details"></textarea>-->
-                    <!--</div>-->
-                <!--</fieldset>-->
-         <!--</form>-->
-        <!--<script>-->
-            <!--$(":input").focus(function () {-->
-                <!--$(this).addClass("focus");-->
-            <!--}).blur(function () {-->
-                <!--$(this).removeClass("focus");-->
-            <!--});-->
-        <!--</script>-->
     </textarea>
     </p>
 
+    <h2>多行文本框应用</h2>
+    <div>
+        <span id="bigger" class="add">增大</span>
+        <span id="smaller" class="add">减小</span>
+    </div>
+    <div>
+        <textarea  id="comment" style="height: 300px; border: 1px black solid; width: 500px;">
+            textarea 里的滑动高度和height同理, 做法也一样, 具体做法右击见源码
+        </textarea>
+    </div>
+
+    <script>
+        $("#bigger").click(function () {
+            var comment = $("#comment");
+            if (!comment.is(":animated"))
+            {
+                if (comment.height() < 500){
+                    comment.animate({ height : "+=50"}, 1000);
+                }
+            }
+        });
+
+        $("#smaller").click(function () {
+            var comment = $("#comment");
+            if (!comment.is(":animated"))
+            {
+                if (comment.height() > 50){
+                    comment.animate({ height : comment.height()-50}, 1000);
+                }
+            }
+        });
+    </script>
 </body>
 </html>
