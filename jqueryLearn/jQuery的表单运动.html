@@ -92,5 +92,71 @@
             }
         });
     </script>
+
+    <h2>复选框应用</h2>
+    你的爱好是:
+    <input type="checkbox" id="checkOr"> 全选/全不选 <br>
+    看书:<input type="checkbox" name="hobby" value="看书">
+    游戏:<input type="checkbox" name="hobby" value="游戏">
+    跑步:<input type="checkbox" name="hobby" value="跑步">
+    运动:<input type="checkbox" name="hobby" value="运动"> <br>
+    <button id="checkAll">全选</button>
+    <button id="checkNo">全不选</button>
+    <button id="checkReverse">反选</button>
+    <button id="sumbit">提交</button>
+    <p>
+        实现上面的效果, 有多种做法, jQuery和原生的js混用效果更好 <br>
+        $("input[name=hobby]:checkbox:checked").each(function(){}); 像这个, 选择器可以接连套用, 理解 <br>
+        attr()和prop(), prop更好. <br>
+        $("input[name=hobby]:checkbox").filter(":checked"); //filter(selector) 将匹配元素集合筛减为指定选择器的元素 <br>
+        $("input[name=hobby]:checkbox").each(function(){}) // each遍历集合元素节点 <br>
+        //以上的:checkedbox都可以省略, 具体实现看源码
+    </p>
+    <script>
+        $("#checkAll").click(function () {
+            $("input[name=hobby]:checkbox").prop("checked", true);
+        });
+        $("#checkNo").click(function () {
+            $("input[name=hobby]:checkbox").prop("checked", false);
+        });
+        $("#checkReverse").click(function () {
+            $("input[name=hobby]:checkbox").each(function () {
+//               $(this).prop("checked", !$(this).prop("checked"));
+                this.checked = !this.checked;
+            });
+        });
+        $("#sumbit").click(function () {
+            var test = "你提交的数据是:";
+//            $("input[name=hobby]:checkbox").each(function () {
+//                if (this.checked){
+////                    test += this.value+"\r\n";
+//                    test += $(this).val() + "\n";
+//                }
+//            });
+            $("input[name=hobby]:checked").each(function () {
+                test += $(this).val() + "\n";
+            });
+            alert(test);
+        });
+        
+        $("#checkOr").click(function () {
+            $("input[name=hobby]:checkbox").prop("checked", this.checked);
+        });
+        
+        $("input[name=hobby]:checkbox").click(function () {
+//            var flag = true;
+//            $("input[name=hobby]:checkbox").each(function () {
+//                if (!this.checked){
+//                    flag = false;
+//                }
+//            });
+//            $("#checkOr").prop("checked", flag);
+
+
+
+            var temp = $("input[name=hobby]:checkbox");
+            $("#checkOr").prop("checked", temp.length == temp.filter(":checked").length)
+        });
+    </script>
 </body>
 </html>
