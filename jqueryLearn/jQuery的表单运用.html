@@ -13,6 +13,44 @@
         .add {
             background-color: orange;
         }
+
+        .onError {
+            color: #f00;
+        }
+
+        .onSuccess {
+            color: green;
+        }
+
+        .required {
+            color: #f00;
+        }
+
+        .fontTips {
+            padding-left: 10px;
+            font-size: 15px;
+        }
+
+        .odd {
+            background-color: red;
+        }
+
+        .even {
+            background-color: orange;
+        }
+
+        .selected {
+            background-color: blue;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .left {
+            text-align: left;
+        }
+
     </style>
 </head>
 <body>
@@ -157,36 +195,38 @@
     </script>
 
     <h2>下拉框应用</h2>
-    <select multiple="multiple" id="select1" style="width: 100px;height: 200px; float: left">
-        <option value="1">选项1</option>
-        <option value="2">选项2</option>
-        <option value="3">选项3</option>
-        <option value="4">选项4</option>
-        <option value="5">选项5</option>
-        <option value="6">选项6</option>
-        <option value="7">选项7</option>
-        <option value="8">选项8</option>
-        <option value="9">选项9</option>
-        <option value="10">选项10</option>
-        <option value="11">选项11</option>
-        <option value="12">选项12</option>
-        <option value="13">选项13</option>
-        <option value="14">选项14</option>
-        <option value="15">选项15</option>
-        <option value="16">选项17</option>
-    </select>
+    <div style="height: 200px">
+        <select multiple="multiple" id="select1" style="width: 100px;height: 200px; float: left">
+            <option value="1">选项1</option>
+            <option value="2">选项2</option>
+            <option value="3">选项3</option>
+            <option value="4">选项4</option>
+            <option value="5">选项5</option>
+            <option value="6">选项6</option>
+            <option value="7">选项7</option>
+            <option value="8">选项8</option>
+            <option value="9">选项9</option>
+            <option value="10">选项10</option>
+            <option value="11">选项11</option>
+            <option value="12">选项12</option>
+            <option value="13">选项13</option>
+            <option value="14">选项14</option>
+            <option value="15">选项15</option>
+            <option value="16">选项17</option>
+        </select>
 
-    <div style="float: left;">
-        怎么实现看源码
-        <br><br>
-        <button id="right">右移</button> <br>
-        <button id="rightAll">全部右移</button> <br>
-        <button id="left">左移</button> <br>
-        <button id="leftAll">全部左移</button>
+        <div style="float: left;">
+            怎么实现看源码
+            <br><br>
+            <button id="right">右移</button> <br>
+            <button id="rightAll">全部右移</button> <br>
+            <button id="left">左移</button> <br>
+            <button id="leftAll">全部左移</button>
+        </div>
+
+        <select multiple="multiple" id="select2" style="width: 100px;height: 200px; float: left">
+        </select>
     </div>
-
-    <select multiple="multiple" id="select2" style="width: 100px;height: 200px; float: left">
-    </select>
 
     <script>
 
@@ -217,6 +257,186 @@
         });
 
     </script>
+
+    <h2>表单验证</h2>
+    <div style="width: 500px;">
+        <form action="#" id="form2">
+            <div>
+                <label for="name">用户名:</label>
+                <input type="text" id="name" required="required">
+            </div>
+            <div>
+                <label for="email">邮箱:</label>
+                <input type="text" id="email" name="email" required="required">
+            </div>
+            <div>
+                <label for="detail">个人资料:</label>
+                <input type="text" id="detail">
+            </div>
+            <input type="submit">
+            <input type="reset">
+        </form>
+    </div>
+    <p>
+        表单验证后, 服务器同样需要验证, 防止别人禁用脚本 <br>
+        ("#form2 input:required").each(function () {}这种写法的选择器嵌套要熟练 这里要用input, 不能用 :input, 感觉:input只能独立使用 <br>
+        $(this).is('input[name=email]') 和 $(this).is("#name") 说明is()里的是selector, 熟练掌握要 <br>
+        triggerHandler("blur")和trigger("blur"). 自动触发元素的失去焦点事件, 后者不仅会使元素本身失去焦点, 还会使浏览器失去焦点, 前者不会让
+        浏览器失去焦点 <br>
+
+        具体的实现功能参看源码
+    </p>
+    <script>
+        $("#form2 input:required").each(function () {
+            $(this).parent().append("<span class='required'>*</span>");
+        });
+
+        $("#form2 input:required").blur(function () {
+            var $parent = $(this).parent()
+            $parent.find(".fontTips").remove();
+            if ($(this).is("#name")){
+                if (this.value.trim().length < 6){
+                    $parent.append("<span class='fontTips onError'>账号长度不能小于6位</span>");
+                }else{
+                    $parent.append("<span class='fontTips onSuccess'>输入正确</span>");
+                }
+            }
+            if ($(this).is('input[name=email]')){
+                if (this.value =='' || (this.value != "" && !/.+@.+\.[a-zA-Z]{2,4}$/.test(this.value))){
+                    $parent.append("<span class='fontTips onError'>请输入正确的e-mail地址</span>");
+                }else{
+                    $parent.append("<span class='fontTips onSuccess'>输入正确</span>");
+                }
+            }
+        }).keyup(function () { // 用户每次松开按键时触发
+            $(this).triggerHandler("blur"); // triggerHandler("blur"); 只会触发元素绑定的blur, 不会触发浏览器默认的blur, 如果我们用blur()
+            //就会出现按一下, input就会失去焦点
+//            $(this).trigger("blur");
+        }).focus(function () { // 获取焦点时触发
+            $(this).triggerHandler("blur");
+        });
+
+        $("#form2").submit(function () {
+            $("#form2 input:required").trigger("blur"); //自动触发
+            if ($(".onError").length > 0){
+//                alert("完善数据");
+                return false;
+            }
+            alert("数据提交成功");
+        });
+    </script>
+
+    <h2>表格应用</h2>
+    <table width="300px" border="1" cellspacing="0">
+        <thead>
+            <th></th>
+            <th>姓名</th>
+            <th>性别</th>
+            <th>暂住地</th>
+        </thead>
+        <tbody>
+            <tr><td><input type="radio"></td><td>张三</td><td>男</td><td>湖南长沙</td></tr>
+            <tr><td><input type="radio"></td><td>李四</td><td>男</td><td>河南郑州</td></tr>
+            <tr><td><input type="radio"></td><td>王五</td><td>男</td><td>黑龙江哈尔滨</td></tr>
+            <tr><td><input type="radio"></td><td>赵六</td><td>男</td><td>未知</td></tr>
+            <tr><td><input type="radio"></td><td>环保</td><td>男</td><td>同花顺</td></tr>
+            <tr><td><input type="radio"></td><td>创业</td><td>男</td><td>加油</td></tr>
+        </tbody>
+    </table>
+    <script>
+        $("table tbody tr:odd").addClass("odd");
+        $("table tbody tr:even").addClass("even");
+        $("table tbody>tr").click(function () {
+            $(this).addClass("selected").siblings().each(function () {
+                $(this).find(":radio").prop("checked", false);
+            }).removeClass("selected").end().find(":radio").prop("checked", true);
+        });
+    </script>
+
+    <table width="300px" border="1" cellspacing="0" id="table2" style="margin-top: 10px">
+        <thead>
+        <th></th>
+        <th>姓名</th>
+        <th>性别</th>
+        <th>暂住地</th>
+        </thead>
+        <tbody>
+        <tr><td><input type="checkbox" checked="checked"></td><td>张三</td><td>男</td><td>湖南长沙</td></tr>
+        <tr><td><input type="checkbox"></td><td>李四</td><td>男</td><td>河南郑州</td></tr>
+        <tr><td><input type="checkbox"></td><td>王五</td><td>男</td><td>黑龙江哈尔滨</td></tr>
+        <tr><td><input type="checkbox"></td><td>赵六</td><td>男</td><td>未知</td></tr>
+        <tr><td><input type="checkbox"></td><td>环保</td><td>男</td><td>同花顺</td></tr>
+        <tr><td><input type="checkbox"></td><td>创业</td><td>男</td><td>加油</td></tr>
+        </tbody>
+    </table>
+
+    <script>
+
+        $("#table2 tbody tr:has(:checked)").addClass("selected");
+        $("#table2 tbody tr").click(function () {
+//            if ($(this).hasClass("selected")){
+//                $(this).removeClass("selected").find(":checkbox").prop("checked", false);
+//            }else{
+//                $(this).addClass("selected").find(":checkbox").prop("checked", true);
+//            }
+//            var selected = $(this).find(":checkbox").prop("checked");
+            var selected = $(this).hasClass("selected");
+            $(this)[selected ? "removeClass" : "addClass"]("selected").find(":checkbox").prop("checked", !selected);
+
+        });
+    </script>
+
+    <p>
+        第一个表格 <br>
+        $("table tbody>tr").click(function () { <br>
+            $(this).addClass("selected").siblings().each(function () { <br>
+                $(this).find(":radio").prop("checked", false); <br>
+        }).removeClass("selected").end().find(":radio").prop("checked", true);}); <br>
+        slibings()拿到同级别的元素, <br>
+        end()返回上一级, 即原来是 slibings(), end之后就是 $(this) <br>
+        find() 只能由单个元素调用, 集合调用不了, 所有使用了each()遍历 <br> <br>
+        第二个表格 <br>
+        var selected = $(this).hasClass("selected"); <br>
+        $(this)[selected ? "removeClass" : "addClass"]("selected").find(":checkbox").prop("checked", !selected); <br>
+        $(this)["removeClass]("selected") 相当于 $(this).removeClass("selected") <br> <br>
+        $("#table2 tbody tr:has(:checked)").addClass("selected"); <br>
+        熟悉:has()的用法 <br>
+    </p>
+
+    <input type="text" id="search" placeholder="请输入你要搜索的姓名">
+    <input type="button" id="searchBtn" value="确定">
+    <table width="300px" style="border: 1px black solid" id="table3">
+        <thead>
+            <tr><th>姓名</th><th>性别</th><th>暂住地</th></tr>
+        </thead>
+        <tbody class="center">
+            <tr class="left" id="row1"><td>前端开发</td></tr>
+            <tr class="child_row1"><td>张三</td><td>男</td><td>北京</td></tr>
+            <tr class="child_row1"><td>李四</td><td>女</td><td>北京</td></tr>
+            <tr class="left" id="row2"><td>后端开发</td></tr>
+            <tr class="child_row2"><td>王五</td><td>男</td><td>天津</td></tr>
+            <tr class="child_row2"><td>赵六</td><td>女</td><td>重庆</td></tr>
+            <tr class="left" id="row3"><td>app端开发</td></tr>
+            <tr class="child_row3"><td>付七</td><td>男</td><td>苏州</td></tr>
+            <tr class="child_row3"><td>钱八</td><td>女</td><td>杭州</td></tr>
+        </tbody>
+    </table>
+
+    <script>
+//        $("tr:contains('王五')").addClass("selected");
+        $("tr.left").click(function () {
+            $(this).siblings(".child_"+this.id).toggle();
+        });
+
+        $("#searchBtn").click(function () {
+            $("#table3 tbody tr").hide().filter(":contains('"+$("#search").val()+"')").show();
+        });
+    </script>
+    <p>
+        $(this).siblings(".child_"+this.id).toggle(); 实现表格关闭的效果<br>
+        $("#table3 tbody tr").hide().filter(":contains('"+$("#search").val()+"')").show(); 实现搜索功能 <br>
+        具体学习 filter(), :contain()内容过滤器, 以及实现的思想
+    </p>
 
 </body>
 </html>
