@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery的Ajax</title>
+    <link rel="stylesheet" href="../common/css/base.css">
+    <script src="./lib/jquery-3.2.1.js" type="text/javascript"></script>
+</head>
+<body>
+
+<h1>jQuery的Ajax</h1>
+
+<p>Ajax全称"Asynchronous JavaScript and XML" 异步JavaScript和XML, 它并不是一种单一的技术, 而是有机利用了一系列交互网页
+    应用相关的技术所形成的结合体. 它的出现, 揭开了无刷新页面的新时代, 并替代了传统的web方式和通过隐藏的框架(即form+iframe)来进行
+    异步提交的趋势, 是web开发应用的一个里程碑.
+</p>
+
+<h2>原生的js实现Ajax</h2>
+<pre>
+
+    注意下面的代码, 是在java里测试的的接口,
+
+    function ajax() {
+        var xmlHttpReq = null;
+        if (window.ActiveXObject){ // 兼容IE5,6
+            xmlHttpReq = new ActiveXObject("Microsoft XMLHTTP");
+        }else if(window.XMLHttpRequest){ //其他浏览器
+            xmlHttpReq = new XMLHttpRequest();
+        }
+        xmlHttpReq.open("GET", $context+"/ent/hello", true); // 默认异步, true, 显示的设置为异步
+        xmlHttpReq.onreadystatechange = function () { // 状态改变的回调函数
+            console.info("redayState == "+xmlHttpReq.readyState);
+            console.info("redayState == "+xmlHttpReq.status);
+            if (xmlHttpReq.readyState == 4){ // 4表示加载完成
+                if (xmlHttpReq.status == 200){ // 200成功
+                    alert(xmlHttpReq.responseText);
+                }
+            }
+        };
+        xmlHttpReq.send(null); // 因为是get提交,所以可以用null作为参数
+</pre>
+
+<h2>jQuery实现Ajax</h2>
+<p>
+    jQuery对Ajax操作进行了封装, 在jQuery中$.ajax()方法属于最底层的方法, 第二层的是load(), $.get()和$.post()方法,
+    第三层是$.getScript()和$.getJSON()方法. 第二层方法用的最多
+</p>
+
+<h2>load</h2>
+<pre>
+    &lt;input type="button" id="send" value="ajax获取">
+    &lt;div id="resText"></div>
+
+    &lt;script>
+        $("#send").click(function () {
+            $("#resText").load("test.html #test", function(responseText, textStatus, xmlHttpRequest){
+
+            });
+        });
+    &lt;/script>
+    会把test.html的内容插入到这个div里面
+
+    load(url, [params], [callback]);
+    params 是用来传递给服务器的参数, json形式, callback回调函数, url可以是请求服务器的url, 也可以是本地链接
+    如果想要在筛选test.html自己要获取的内容, 可以在后面跟上选择器
+    不传参数是get方式, 传参数是post方式
+    回调函数可以有三个参数, 名字不能错,顺序无所谓
+    无论请求是否成功, 只要请求完成,都会都会触发回调函数
+</pre>
+
+<h2>$.get和$.post</h2>
+<p>
+    load()方法通常用来web服务器上获取静态的数据文件, 然而这并不能体现ajax的全部价值, 在项目中, 如果需要传递
+    一些参数给服务器中的页面, 那么可以使用$.get()和$.post()方法, 或者后面讲解的$.ajax()方法 <br>
+    注意: $.get()和$.post()是jquery的全局函数, 之前学的方法都是对jQuery进行操作的. <br>
+    $.get(url, [data], [callback], [type]); <br>
+    url: 请求html的url地址 <br>
+    data(可选): 传递的参数, json对象 <br>
+    callback(可选), 载入成功时回调函数 (只有当response的返回状态是success才调用该方法, 自动将请求结果和状态传递给该方法)
+    type(可选), 服务器返回内容的格式, 包括xml, html, script, json, text和default
+</p>
+
+<pre>
+    注意: 回调函数只能由2个参数, 第一个参数是服务器端返回的数据, 第二个数据是代表请求的状态, 并且回调
+    函数只有当成功返回success后才会被调用, 这一点与load()不一样
+    function testGet() {
+        $.get($context+"/ent/hello", {
+            name : "lwja",
+            age : 24
+        },function (value,status) {
+            alert(status);
+            alert(value.data);
+        });
+    }
+    post的格式和get一样, 只不过原理不一样
+    get的参数是最终是拼接在url后面的, 数据传输不能超过2kb, 请求的数据会被浏览器缓存, 不安全
+    post参数是以实体方式传给服务器的, 数据传输很大(理论上没有限制的)
+</pre>
+
+<h2>$.getScript()和$.getJSON()</h2>
+<pre>
+    有时候完全没必要在初次加载时就获取所需的全部js文件, 虽然可以在需要哪个js文件时, 东西的创建 &lt;script>标签,如下
+    $(document.createElement("script").prop("src", "test.js").appendTo("head")) 或者
+    $("&lt;script type="text/javascript" src="test.js">&lt;/script>")
+    这两种方式都不理想,
+    $.getScript('test.js'); 可以直接加载js文件, 并且不需要js文件进行处理, 自动执行
+    $.getJson()方法用于加载json文件, 与$.getScript()方法的用法相同.
+    虽然加载了json文件,但是没有告诉js对返回的数据如何处理, 为此, jq提供了回调函数
+    $("#send").click(function(){
+        $.getJSON('test.json', function(data){
+            // data: 返回的数据
+        });
+    });
+    $.each()函数提供了不同于jQuery对象的each()方法, 这是一个全局函数, 不操作jq对象, 以一个数据或对象作为第一个参数
+    以一个回调函数作为第二个参数. 回调函数有两个参数, 第一个为对象的成员或数组的索引, 第二个为对象变量的内容
+    $("#send").click(function(){
+        $.getJSON('http://api.flickr.com/services/feeds/photos_public.gne?tags=car
+        &tagmode=any&format=json&callback=?', function(data){
+            // data: 返回的数据
+            $.each(data, function(index, value){
+                // 在each函数中, 如果要退出, 只需要返回false
+            });
+        });
+    });
+    以上"url?callback=?"中的最后一个?会被替换为函数名, 以执行回调函数
+    JSONP是一个非官方协议, 但是目前已经成为各大公司的web应用跨域首选
+</pre>
+
+<script>
+
+</script>
+
+</body>
+</html>

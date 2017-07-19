@@ -28,3 +28,12 @@ textarea {
     background-color: transparent;
     font-size: 18px;
 }
+
+pre {
+    width: 1000px;
+    background-color: skyblue;
+    /*text-align: center;*/
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
