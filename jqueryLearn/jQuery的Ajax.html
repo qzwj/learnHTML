@@ -126,8 +126,45 @@
     JSONP是一个非官方协议, 但是目前已经成为各大公司的web应用跨域首选
 </pre>
 
-<script>
+<h2>$.ajax()</h2>
+<pre>
+    $.ajax()方法是jQuery最底层的Ajax实现.
+    结构是$.ajax(options);   ->  $.ajax({});
+    该方法只有1个参数, 但在这个对象里包含了$.ajax()方法所需要的请求设置以及回调函数等信息, 参数以key/value形式存在,
+    所有的参数都是可选的, 常用参数如下,
+    参数名称        类型          说明
+    url          String         发送请求的地址(默认为当前页的地址)
+    type         String         请求方式 post 和get, 其他put和delete也可以使用, 部分浏览器支持
+    timeout      Number         设置请求超时时间(毫秒). 此设置将覆盖 $.ajaxSetup()方法的全局设置
+    data         Object或String  发送到服务器的数据 json格
+    dataType     String         预期服务器返回的数据类型
+    beforeSend   Function       发送请求前可以修改XMLHttpRequest对象的函数, 例如添加自定义http头, 在beforeSend中
+                                如果返回false可以取消本次ajax请求, XMLHttpRequest是唯一的参数
+    complete     Function       请求完成回调的函数, 无论成功和失败, 参数XMLHttpRequest和描叙成功类型字符串textStatus
+    success      Function       请求成功回调, 有两个函数, 由服务器返回, function(data, textStatus){}
+    error        Function       请求失败被调用的函数, function(XMLHttpRequest, textStatus, errorThrown){}
+    global       Boolean        默认为true表示是否触发全局ajax事件, 设置为false将不会触发全局ajax事件
 
+    实例:
+    $("#send").click(function () {
+        $.ajax({
+            url : $context + "/ent/hello",
+            type : "post",
+            data : {
+               name : 'lwj',
+                age : 18
+            },
+            success : function (data) {
+                alert(data);
+            }
+        });
+    });
+
+
+</pre>
+
+
+<script>
 </script>
 
 </body>
