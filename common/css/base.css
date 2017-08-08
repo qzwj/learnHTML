@@ -35,5 +35,6 @@ pre {
     /*text-align: center;*/
     margin: 0 auto;
     padding: 20px;
+    font-size: 16px;
     box-sizing: border-box;
 }

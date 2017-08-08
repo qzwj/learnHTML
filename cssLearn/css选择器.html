@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>css选择器</title>
+    <link rel="stylesheet" href="../common/css/base.css">
+
+    <style>
+
+        /*div.test p:first-child {*/
+            /*color: red;*/
+        /*}*/
+
+         /*div p:first-of-type {*/
+             /*color: blue;*/
+         /*}*/
+
+        /*p:first-child {*/
+            /*color: red;*/
+        /*}*/
+
+        /*p:last-child {*/
+            /*color: red;*/
+        /*}*/
+
+        /*p:nth-child(2) {*/
+            /*color: blue;*/
+        /*}*/
+
+        /*p:nth-last-child(2){*/
+            /*color: red;*/
+        /*}*/
+
+        /*p:only-child{*/
+            /*color:red;*/
+        /*}*/
+
+        /*p:only-of-type {*/
+            /*color:red;*/
+        /*}*/
+        /*input[type=password] {*/
+            /**/
+        /*}*/
+    </style>
+</head>
+<body>
+
+<h1>CSS选择器</h1>
+
+<h2>id选择器</h2>
+<pre>
+    每个html元素标签都可以绑定一个唯一的id,  通过css, 可以通过 #+id,找到这个唯一的id标签
+    格式: #id名字{}
+    &lt;span id="test">我是span&lt;/span>
+    #test {
+        color: red;
+    }
+</pre>
+
+<h2>类选择器</h2>
+<pre>
+    每个html标签, 都可以绑定类选择器, 类不唯一, 可以绑定多个, 可以多个元素标签绑定同一个类达到修改css,
+    可以修改这一类所有标签的样式
+    格式: .类名{}
+    下面的第一个span有color的css样式, 第二个span有size的样式,第三个span有color和size的样式
+    &lt;span class="color">哈哈&lt;/span>
+    &lt;span class="size">呵呵&lt;/span>
+    &lt;span class="color size">洗洗&lt;/span>
+    .color {
+        color : #f00;
+    }
+    .size {
+        font-size : 20px;
+    }
+</pre>
+
+<h2>后代选择器</h2>
+<pre>
+    后代选择器 不需要特意给html绑定id或者类, 可以直接通过 元素标签 一层一层的找到自己需要定位的标签
+    格式:选择器 选择器 ....{}
+    下面的实例会把"我是span2"改为红色, 而"我是span1" 不会改变
+
+    &lt;div class="ss">
+        &lt;span>我是span1&lt;/span>
+        &lt;a href="#">&lt;span>我是span2&lt;/span>&lt;/a>
+    &lt;/div>
+    div a span {
+        color : red;
+    }
+    .ss a span {
+        color : red;
+    }
+    也可以像下面这样省略a,  但是上面的更准确
+    div span {
+        color : red;
+    }
+</pre>
+
+<h2>子元素选择器</h2>
+<pre>
+    子元素选择器类似后代选择器, 不同于后代选择器, 一定要格式完全匹配, 相对于上面的比较严格
+    格式:选择器>选择器>....{}
+    只有第二个符合 div>ul>li>span的格式, 如果是 div ul li span, 那么第一第二都符合
+    &lt;div>
+        &lt;ul>
+            &lt;li>&lt;p>&lt;span>我是span1&lt;/span>&lt;/p>&lt;/li>
+            &lt;li> &lt;span>我是span2&lt;/span> &lt;/li>
+            &lt;li>我是span3&lt;/li>
+        &lt;/ul>
+    &lt;/div>
+    div>ul>li>span {
+        color : red;
+    }
+</pre>
+
+<h2>交集选择器</h2>
+<pre>
+    相交部分的选择器设置属性值的选择器 (了解)
+    格式: 选择器选择器... {}
+    可以是标签,可以是id,class, 但是标签之间不能直接连接类似 divul这样
+    &lt;div class="ee">
+        &lt;ul class="aa bb">
+            &lt;li>1&lt;/li>
+        &lt;/ul>
+    &lt;/div>
+    div.ee {
+        color : red;
+    }
+    .aa.bb {
+        font-size: 20px;
+    }
+</pre>
+
+<h2>并集选择器</h2>
+<pre>
+    一起并列设置共同属性值的选择器
+    格式: 选择器,选择器,....{}
+    &lt;span>我是span&lt;/span>
+    &lt;p>我是paragraph&lt;/p>
+    span,p {
+        color : red;
+    }
+</pre>
+
+<h2>相邻兄弟选择器</h2>
+<pre>
+    只能选中连接最后面的那个标签, 标签之间必须相邻
+    &lt;h2>ss&lt;/h2>
+    // &lt;p>我是p&lt;/p>
+    &lt;a href="#">我是大哥&lt;/a>
+    h2+a {
+        color : red;
+    }
+    a 标签的文字会变为红色, 如果打开注释, 就不会为红色
+</pre>
+
+<h2>通用兄弟选择器</h2>
+<pre>
+    会选中连接最后面的那个所有的标签, 标签之间不用相邻
+    &lt;h2>h3&lt;/h2>
+    &lt;a href="#">1&lt;/a>
+    &lt;p>我是p&lt;/p>
+    &lt;a href="#">2&lt;/a>
+    &lt;a href="#">3&lt;/a>
+    h2~p~a {
+        color : red;
+    }
+    a 标签2, 3都满足通用兄弟选择器, 1不满足, 因为1前面没有p标签
+</pre>
+
+<h2>序选择器</h2>
+<pre>
+    first-child 选中同级别中的第一个是某一个标签
+    first-of-type 选中同级别中的第一个出现的这个标签
+    &lt;div class="test">
+        &lt;div>/div>
+        &lt;p>p1&lt;/p>
+        &lt;p>p2&lt;/p>
+        &lt;p>p3&lt;/p>
+    &lt;/div>
+    &lt;p>p4&lt;/p>
+    &lt;p>p5&lt;/p>
+    &lt;p>p6&lt;/p>
+    上面的html代码可以分为两个级别, 一个是大的整体的一份, 一个是div内的一部分,
+    p:first-child{}一个p都不会选中, 是因为大的一份, 第一个是div, 不是p,而小的div内, 同样第一个是div,不是p
+    如果去掉,小的内div空标签, 就会选中p1
+    p:first-of-child{} 选中同一级别中第一次出现, 就可以选中p1和p4了
+    同理 div p:first-child {}可以缩小范围, 更具体
+
+    last-child和last-of-type 选中最后后一个
+    nth-child(x){} 和 nth-of-type(x){}选中第x个, x可以为odd(偶数), even(奇数) 2n+1 xn+y, x,y自定义
+    nth-last-child(x){}和nth-last-of-type(x){}选中倒数第几个
+    only-child和only-of-type 仅有一个某某标签
+    例如 p:only-child 大整体只有一个p标签被选中
+    p:only-of-type每个级别内的父元素只有一个p标签的被选中
+</pre>
+
+<h2>属性选择器</h2>
+<pre>
+    [attribute]  p[id] {}
+    [attribute=value]   p[class=test]{} 常用 input[type=password] {}
+
+    属性取值以某某开头
+    [attribute|=value] css2
+    [attribute^=value] css3 和上面的区别是, 前者必须包含-和其他内容隔离
+
+    属性取值以某某结尾
+    [attribute$=value] css3
+
+    属性中是否包含某个特定的值
+    [attribute~=value] css2
+    [attribute*=value] css3 和上面的区别是, 前者只能找独立的单词,前后都有空格隔开, 有局限性
+
+    通配符选择器
+    * {} 设置界面上所有的标签,遍历所有标签, 性能较差
+
+</pre>
+
+
+</body>
+</html>
